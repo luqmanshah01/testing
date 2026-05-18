@@ -97,6 +97,19 @@
   .figma-hero__container {
     display: flex;
     flex-direction: column;
+    padding-inline: 1rem;
+  }
+
+  @media screen and (min-width: 750px) {
+    .figma-hero__container {
+      padding-inline: 2.5rem;
+    }
+  }
+
+  @media screen and (min-width: 1200px) {
+    .figma-hero__container {
+      padding-inline: 4rem;
+    }
   }
 
   /* ─── Main split layout ─── */
@@ -185,13 +198,22 @@
     align-items: stretch;
     overflow: hidden;
     min-height: 260px;
+    /* let image bleed to right edge on mobile */
+    margin-inline-end: -1rem;
   }
 
   @media screen and (min-width: 750px) {
     .figma-hero__media-wrap {
-      /* stretch to full grid row height */
       align-self: stretch;
       min-height: unset;
+      /* restore: image stays within padded container on desktop */
+      margin-inline-end: -2.5rem;
+    }
+  }
+
+  @media screen and (min-width: 1200px) {
+    .figma-hero__media-wrap {
+      margin-inline-end: -4rem;
     }
   }
 

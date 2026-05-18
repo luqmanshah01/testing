@@ -12,11 +12,12 @@
     "figma_hero_main": {
       "type": "figma-hero",
       "settings": {
-        "background_color": "#F2F0F1",
+        "background_color": "#f2f0f1",
         "heading": "FIND CLOTHES THAT MATCHES YOUR STYLE",
         "description": "Browse through our diverse range of meticulously crafted garments, designed to bring out your individuality and cater to your sense of style.",
         "button_label": "Shop Now",
         "button_link": "shopify://collections/all",
+        "image": "shopify://shop_images/b26fea69ccfd8aa5825862cdb9604a4fb4930464.jpg",
         "stat_1_number": "200+",
         "stat_1_label": "International Brands",
         "stat_2_number": "2,000+",

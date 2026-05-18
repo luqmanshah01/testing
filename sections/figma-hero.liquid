@@ -132,9 +132,13 @@
   @media screen and (min-width: 750px) {
     .figma-hero__main {
       grid-template-columns: 55% 45%;
-      /* grow to fill hero height minus stats row */
+      /* fill remaining flex space after stats row */
       flex: 1;
       min-height: 0;
+      /* force the single grid row to stretch to full container height
+         — without this the row shrinks to content height and clips the image */
+      height: 100%;
+      grid-template-rows: 1fr;
     }
   }
 
@@ -216,8 +220,8 @@
   @media screen and (min-width: 750px) {
     .figma-hero__media-wrap {
       align-self: stretch;
+      height: 100%;
       min-height: unset;
-      /* restore: image stays within padded container on desktop */
       margin-inline-end: -2.5rem;
     }
   }
@@ -235,14 +239,14 @@
     max-width: none;
     /* landscape image: models on right side — crop the empty left space */
     object-fit: cover;
-    object-position: 68% bottom;
+    object-position: 68% 85%;
     position: relative;
     z-index: 1;
   }
 
   @media screen and (min-width: 750px) {
     .figma-hero__image {
-      object-position: 65% bottom;
+      object-position: 65% 90%;
     }
   }
 

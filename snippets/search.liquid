@@ -26,6 +26,10 @@
       <span class="svg-wrapper {% if display_style != 'icon' %}desktop:hidden{% endif %}">
         {{ 'icon-search.svg' | inline_asset_content }}
       </span>
+
+      <span class="search-action__placeholder" aria-hidden="true">
+        {{- 'content.search_input_placeholder' | t -}}
+      </span>
     </button>
   </search-button>
 {% endunless %}

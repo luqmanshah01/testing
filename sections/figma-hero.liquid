@@ -103,7 +103,7 @@
   .figma-hero__main {
     display: grid;
     grid-template-columns: 1fr;
-    align-items: center;
+    align-items: stretch;
     min-height: 380px;
   }
 
@@ -119,6 +119,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    justify-content: center;
     gap: 1.5rem;
     padding-block: 3rem 2rem;
     position: relative;
@@ -127,7 +128,7 @@
 
   @media screen and (min-width: 750px) {
     .figma-hero__content {
-      padding-block: 5rem 4rem;
+      padding-block: 4rem;
       padding-inline-end: 3rem;
       gap: 2rem;
     }
@@ -180,33 +181,35 @@
   .figma-hero__media-wrap {
     position: relative;
     display: flex;
-    justify-content: center;
-    align-items: flex-end;
+    justify-content: flex-end;
+    align-items: stretch;
     overflow: hidden;
+    min-height: 260px;
   }
 
-  @media screen and (max-width: 749px) {
+  @media screen and (min-width: 750px) {
     .figma-hero__media-wrap {
-      max-height: 320px;
+      /* stretch to full grid row height */
+      align-self: stretch;
+      min-height: unset;
     }
   }
 
   .figma-hero__image {
     display: block;
     width: 100%;
-    max-width: 520px;
-    height: auto;
+    height: 100%;
+    max-width: none;
+    /* landscape image: models on right side — crop the empty left space */
     object-fit: cover;
-    object-position: top center;
+    object-position: 68% bottom;
     position: relative;
     z-index: 1;
   }
 
   @media screen and (min-width: 750px) {
     .figma-hero__image {
-      max-height: 580px;
-      object-fit: contain;
-      object-position: bottom center;
+      object-position: 65% bottom;
     }
   }
 

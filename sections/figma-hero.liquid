@@ -92,11 +92,20 @@
   .figma-hero {
     font-family: 'Satoshi', sans-serif;
     overflow: hidden;
+    /* Figma: 663px total height at 1440px wide */
+    min-height: 400px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .figma-hero {
+      height: 663px;
+    }
   }
 
   .figma-hero__container {
     display: flex;
     flex-direction: column;
+    height: 100%;
     padding-inline: 1rem;
   }
 
@@ -117,13 +126,15 @@
     display: grid;
     grid-template-columns: 1fr;
     align-items: stretch;
-    min-height: 380px;
+    min-height: 300px;
   }
 
   @media screen and (min-width: 750px) {
     .figma-hero__main {
       grid-template-columns: 55% 45%;
-      min-height: 560px;
+      /* grow to fill hero height minus stats row */
+      flex: 1;
+      min-height: 0;
     }
   }
 

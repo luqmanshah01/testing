@@ -1,0 +1,358 @@
+
+<div class="na">
+  <div class="na__wrap page-width">
+
+    <h2 class="na__title">{{ section.settings.heading }}</h2>
+
+    <div class="na__grid">
+      {%- assign col = section.settings.collection -%}
+      {%- if col != blank and col.products_count > 0 -%}
+        {%- for product in col.products limit: section.settings.max_products -%}
+
+          {%- assign on_sale = false -%}
+          {%- if product.compare_at_price > product.price -%}
+            {%- assign on_sale = true -%}
+            {%- assign raw_discount = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price -%}
+          {%- endif -%}
+
+          <a href="{{ product.url }}" class="na__card">
+
+            <div class="na__card-img">
+              {%- if product.featured_image -%}
+                {{
+                  product.featured_image
+                  | image_url: width: 533
+                  | image_tag:
+                    class: 'na__img',
+                    loading: 'lazy',
+                    alt: product.title,
+                    widths: '300, 400, 533',
+                    sizes: '(min-width: 990px) 25vw, (min-width: 750px) 33vw, 50vw'
+                }}
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag: 'na__img na__img--ph' }}
+              {%- endif -%}
+            </div>
+
+            <div class="na__card-info">
+
+              <p class="na__name">{{ product.title }}</p>
+
+              {%- if section.settings.show_stars -%}
+                <div class="na__rating">
+                  <div class="na__stars" aria-hidden="true">
+                    {%- for i in (1..5) -%}
+                      <svg class="na__star{% if i <= 4 %} na__star--on{% endif %}" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8 1.5l1.545 3.13 3.455.502-2.5 2.437.59 3.44L8 9.385 4.91 11.01l.59-3.44L3 5.132l3.455-.502z"/>
+                      </svg>
+                    {%- endfor -%}
+                  </div>
+                  <span class="na__rating-label">4.5/5</span>
+                </div>
+              {%- endif -%}
+
+              <div class="na__price-row">
+                {%- if on_sale -%}
+                  <span class="na__price na__price--sale">{{ product.price | money_without_trailing_zeros }}</span>
+                  <span class="na__price na__price--was">{{ product.compare_at_price | money_without_trailing_zeros }}</span>
+                  <span class="na__badge">-{{ raw_discount }}%</span>
+                {%- else -%}
+                  <span class="na__price">{{ product.price | money_without_trailing_zeros }}</span>
+                {%- endif -%}
+              </div>
+
+            </div>
+          </a>
+
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..4) -%}
+          <div class="na__card">
+            <div class="na__card-img">
+              {{ 'product-' | append: i | placeholder_svg_tag: 'na__img na__img--ph' }}
+            </div>
+            <div class="na__card-info">
+              <p class="na__name">Sample Product</p>
+              {%- if section.settings.show_stars -%}
+                <div class="na__rating">
+                  <div class="na__stars" aria-hidden="true">
+                    {%- for j in (1..5) -%}
+                      <svg class="na__star{% if j <= 4 %} na__star--on{% endif %}" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8 1.5l1.545 3.13 3.455.502-2.5 2.437.59 3.44L8 9.385 4.91 11.01l.59-3.44L3 5.132l3.455-.502z"/>
+                      </svg>
+                    {%- endfor -%}
+                  </div>
+                  <span class="na__rating-label">4.5/5</span>
+                </div>
+              {%- endif -%}
+              <div class="na__price-row">
+                <span class="na__price">$120</span>
+              </div>
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.show_view_all and col != blank -%}
+      <div class="na__footer">
+        <a href="{{ col.url }}" class="na__view-all">View All</a>
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+
+{% stylesheet %}
+
+  .na {
+    background-color: #ffffff;
+    padding-block: 4rem 5rem;
+  }
+
+  .na__wrap {
+    padding-inline: 1rem;
+  }
+
+  @media screen and (min-width: 750px) {
+    .na__wrap { padding-inline: 2.5rem; }
+  }
+
+  @media screen and (min-width: 1200px) {
+    .na__wrap { padding-inline: 4rem; }
+  }
+
+  /* ─── Heading ─── */
+  .na__title {
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 900;
+    font-size: clamp(2rem, 3.5vw, 2.75rem);
+    text-align: center;
+    text-transform: uppercase;
+    color: #000000;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+    margin: 0 0 2.5rem;
+  }
+
+  /* ─── Grid ─── */
+  .na__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  @media screen and (min-width: 750px) {
+    .na__grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+    }
+  }
+
+  /* ─── Card ─── */
+  .na__card {
+    display: flex;
+    flex-direction: column;
+    border-radius: 14px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .na__card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  /* ─── Image area: gray ─── */
+  .na__card-img {
+    background-color: #F0EEED;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    overflow: hidden;
+  }
+
+  .na__img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  .na__img--ph {
+    opacity: 0.25;
+  }
+
+  /* ─── Info area: white ─── */
+  .na__card-info {
+    background-color: #ffffff;
+    padding: 0.75rem 0.875rem 1rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  /* ─── Product name ─── */
+  .na__name {
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    color: #000000;
+    margin: 0;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* ─── Stars ─── */
+  .na__rating {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .na__stars {
+    display: flex;
+    align-items: center;
+    gap: 1px;
+  }
+
+  .na__star {
+    width: 14px;
+    height: 14px;
+    fill: #E8E8E8;
+    flex-shrink: 0;
+  }
+
+  .na__star--on {
+    fill: #FFC633;
+  }
+
+  .na__rating-label {
+    font-family: 'Satoshi', sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 400;
+    color: #999999;
+    line-height: 1;
+  }
+
+  /* ─── Price ─── */
+  .na__price-row {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  .na__price {
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #000000;
+    line-height: 1;
+  }
+
+  .na__price--was {
+    font-weight: 400;
+    font-size: 0.9375rem;
+    color: rgba(0, 0, 0, 0.4);
+    text-decoration: line-through;
+  }
+
+  .na__badge {
+    font-family: 'Satoshi', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #F33F3F;
+    background-color: rgba(243, 63, 63, 0.1);
+    border-radius: 62px;
+    padding: 0.2rem 0.55rem;
+    line-height: 1.5;
+    white-space: nowrap;
+  }
+
+  /* ─── View All button ─── */
+  .na__footer {
+    display: flex;
+    justify-content: center;
+    margin-block-start: 2.5rem;
+  }
+
+  .na__view-all {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+    color: #000000;
+    background-color: #ffffff;
+    border: 1.5px solid rgba(0, 0, 0, 0.25);
+    border-radius: 62px;
+    padding: 0.85rem 2.5rem;
+    text-decoration: none;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .na__view-all:hover {
+    background-color: #000000;
+    border-color: #000000;
+    color: #ffffff;
+    text-decoration: none;
+  }
+
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "New Arrivals",
+  "tag": "section",
+  "class": "figma-new-arrivals",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "NEW ARRIVALS"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "max_products",
+      "label": "Products to show",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "show_stars",
+      "label": "Show star rating",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show View All button",
+      "default": true
+    }
+  ],
+  "presets": [
+    { "name": "New Arrivals" }
+  ]
+}
+{% endschema %}

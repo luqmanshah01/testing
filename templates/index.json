@@ -104,9 +104,9 @@
           "type": "button",
           "name": "t:names.button",
           "settings": {
-            "label": "Shop now",
+            "label": "See all",
             "link": "shopify://collections/all",
-            "open_in_new_tab": false,
+            "open_in_new_tab": true,
             "style_class": "button-secondary",
             "width": "fit-content",
             "custom_width": 100,
@@ -289,10 +289,10 @@
       "block_order": [
         "button_DAm9LV"
       ],
-      "name": "Featured collection (unused)",
+      "name": "Featured collection",
       "settings": {
         "collection": "all",
-        "layout_type": "grid",
+        "layout_type": "carousel",
         "carousel_on_mobile": false,
         "max_products": 4,
         "columns": 4,
@@ -302,28 +302,18 @@
         "rows_gap": 24,
         "icons_style": "arrow",
         "icons_shape": "none",
-        "section_width": "page-width",
+        "section_width": "full-width",
         "horizontal_alignment": "center",
         "gap": 28,
         "color_scheme": "scheme-1",
         "padding-block-start": 100,
         "padding-block-end": 48
       }
-    },
-    "figma_new_arrivals_main": {
-      "type": "figma-new-arrivals",
-      "settings": {
-        "heading": "NEW ARRIVALS",
-        "collection": "all",
-        "max_products": 4,
-        "show_stars": true,
-        "show_view_all": true
-      }
     }
   },
   "order": [
     "figma_hero_main",
     "brand_marquee_main",
-    "figma_new_arrivals_main"
+    "product_list_fa6P9H"
   ]
 }

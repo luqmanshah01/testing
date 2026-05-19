@@ -71,18 +71,16 @@
             </div>
             <div class="na__card-info">
               <p class="na__name">Sample Product</p>
-              {%- if section.settings.show_stars -%}
-                <div class="na__rating">
-                  <div class="na__stars" aria-hidden="true">
-                    {%- for j in (1..5) -%}
-                      <svg class="na__star{% if j <= 4 %} na__star--on{% endif %}" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8 1.5l1.545 3.13 3.455.502-2.5 2.437.59 3.44L8 9.385 4.91 11.01l.59-3.44L3 5.132l3.455-.502z"/>
-                      </svg>
-                    {%- endfor -%}
-                  </div>
-                  <span class="na__rating-label">4.5/5</span>
+              <div class="na__rating">
+                <div class="na__stars" aria-hidden="true">
+                  {%- for j in (1..5) -%}
+                    <svg class="na__star{% if j <= 4 %} na__star--on{% endif %}" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M8 1.5l1.545 3.13 3.455.502-2.5 2.437.59 3.44L8 9.385 4.91 11.01l.59-3.44L3 5.132l3.455-.502z"/>
+                    </svg>
+                  {%- endfor -%}
                 </div>
-              {%- endif -%}
+                <span class="na__rating-label">4.5/5</span>
+              </div>
               <div class="na__price-row">
                 <span class="na__price">$120</span>
               </div>

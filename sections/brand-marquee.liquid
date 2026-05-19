@@ -18,9 +18,14 @@
   <div class="brand-marquee__inner">
     <div class="brand-marquee__track{% if section.settings.pause_on_hover %} brand-marquee__track--pause-hover{% endif %}">
 
+      {%- liquid
+        assign brand_assets = 'brand-versace.svg,brand-zara.svg,brand-gucci.svg,brand-prada.svg,brand-calvinklein.svg' | split: ','
+      -%}
+
       {%- comment -%} First copy {%- endcomment -%}
       <ul class="brand-marquee__list" role="list">
         {%- for block in section.blocks -%}
+          {%- assign asset_key = block.settings.svg_asset -%}
           <li class="brand-marquee__item" style="--logo-scale: {{ block.settings.logo_width | divided_by: 100.0 }};" {{ block.shopify_attributes }}>
             {%- if block.settings.logo != blank -%}
               {{
@@ -31,6 +36,10 @@
                   loading: 'lazy',
                   alt: block.settings.name
               }}
+            {%- elsif asset_key != blank -%}
+              <span class="brand-marquee__logo-svg" role="img" aria-label="{{ block.settings.name }}">
+                {{- asset_key | inline_asset_content -}}
+              </span>
             {%- else -%}
               <span class="brand-marquee__logo-text">{{ block.settings.name }}</span>
             {%- endif -%}
@@ -48,6 +57,7 @@
       {%- comment -%} Duplicate for seamless infinite loop {%- endcomment -%}
       <ul class="brand-marquee__list" role="list" aria-hidden="true">
         {%- for block in section.blocks -%}
+          {%- assign asset_key = block.settings.svg_asset -%}
           <li class="brand-marquee__item" style="--logo-scale: {{ block.settings.logo_width | divided_by: 100.0 }};">
             {%- if block.settings.logo != blank -%}
               {{
@@ -58,6 +68,10 @@
                   loading: 'lazy',
                   alt: block.settings.name
               }}
+            {%- elsif asset_key != blank -%}
+              <span class="brand-marquee__logo-svg" aria-hidden="true">
+                {{- asset_key | inline_asset_content -}}
+              </span>
             {%- else -%}
               <span class="brand-marquee__logo-text">{{ block.settings.name }}</span>
             {%- endif -%}
@@ -156,6 +170,24 @@
 
   .brand-marquee__logo-img:hover {
     opacity: 1;
+  }
+
+  .brand-marquee__logo-svg {
+    display: flex;
+    align-items: center;
+    height: calc(var(--marquee-logo-height, 32px) * var(--logo-scale, 1));
+    opacity: var(--marquee-opacity, 0.85);
+    transition: opacity 0.2s ease;
+  }
+
+  .brand-marquee__logo-svg:hover {
+    opacity: 1;
+  }
+
+  .brand-marquee__logo-svg svg {
+    height: 100%;
+    width: auto;
+    display: block;
   }
 
   .brand-marquee__sep {
@@ -314,14 +346,28 @@
       "name": "Logo",
       "settings": [
         {
+          "type": "select",
+          "id": "svg_asset",
+          "label": "Built-in brand logo",
+          "options": [
+            { "value": "", "label": "— None —" },
+            { "value": "brand-versace.svg", "label": "Versace" },
+            { "value": "brand-zara.svg", "label": "Zara" },
+            { "value": "brand-gucci.svg", "label": "Gucci" },
+            { "value": "brand-prada.svg", "label": "Prada" },
+            { "value": "brand-calvinklein.svg", "label": "Calvin Klein" }
+          ],
+          "default": ""
+        },
+        {
           "type": "image_picker",
           "id": "logo",
-          "label": "Brand logo image"
+          "label": "Custom logo image (overrides built-in)"
         },
         {
           "type": "text",
           "id": "name",
-          "label": "Brand name (fallback text if no image)",
+          "label": "Brand name (alt text / fallback)",
           "default": "Brand"
         },
         {
@@ -341,11 +387,11 @@
     {
       "name": "Brand Marquee",
       "blocks": [
-        { "type": "brand", "settings": { "name": "VERSACE" } },
-        { "type": "brand", "settings": { "name": "ZARA" } },
-        { "type": "brand", "settings": { "name": "GUCCI" } },
-        { "type": "brand", "settings": { "name": "PRADA" } },
-        { "type": "brand", "settings": { "name": "Calvin Klein" } }
+        { "type": "brand", "settings": { "name": "Versace", "svg_asset": "brand-versace.svg" } },
+        { "type": "brand", "settings": { "name": "Zara", "svg_asset": "brand-zara.svg" } },
+        { "type": "brand", "settings": { "name": "Gucci", "svg_asset": "brand-gucci.svg" } },
+        { "type": "brand", "settings": { "name": "Prada", "svg_asset": "brand-prada.svg" } },
+        { "type": "brand", "settings": { "name": "Calvin Klein", "svg_asset": "brand-calvinklein.svg" } }
       ]
     }
   ]

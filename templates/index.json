@@ -29,39 +29,11 @@
     "brand_marquee_main": {
       "type": "brand-marquee",
       "blocks": {
-        "brand_versace": {
-          "type": "brand",
-          "settings": {
-            "name": "VERSACE"
-          }
-        },
-        "brand_zara": {
-          "type": "brand",
-          "settings": {
-            "name": "ZARA"
-          }
-        },
-        "brand_gucci": {
-          "type": "brand",
-          "settings": {
-            "logo": "shopify://shop_images/Group_1.png",
-            "name": ""
-          }
-        },
-        "brand_prada": {
-          "type": "brand",
-          "settings": {
-            "logo": "shopify://shop_images/zara-logo-1_1.png",
-            "name": ""
-          }
-        },
-        "brand_ck": {
-          "type": "brand",
-          "settings": {
-            "logo": "shopify://shop_images/Vector.png",
-            "name": ""
-          }
-        }
+        "brand_versace": { "type": "brand", "settings": { "name": "Versace",      "svg_asset": "brand-versace.svg",     "logo_width": 100 } },
+        "brand_zara":    { "type": "brand", "settings": { "name": "Zara",         "svg_asset": "brand-zara.svg",        "logo_width": 100 } },
+        "brand_gucci":   { "type": "brand", "settings": { "name": "Gucci",        "logo": "shopify://shop_images/Group_1.png",          "logo_width": 100 } },
+        "brand_prada":   { "type": "brand", "settings": { "name": "Prada",        "logo": "shopify://shop_images/zara-logo-1_1.png",    "logo_width": 100 } },
+        "brand_ck":      { "type": "brand", "settings": { "name": "Calvin Klein", "logo": "shopify://shop_images/Vector.png",           "logo_width": 100 } }
       },
       "block_order": [
         "brand_versace",

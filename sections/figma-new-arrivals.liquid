@@ -92,11 +92,9 @@
       {%- endif -%}
     </div>
 
-    {%- if section.settings.show_view_all and col != blank -%}
-      <div class="na__footer">
-        <a href="{{ col.url }}" class="na__view-all">View All</a>
-      </div>
-    {%- endif -%}
+    <div class="na__footer">
+      <a href="{{ col.url | default: routes.collections_url }}" class="na__view-all">View All</a>
+    </div>
 
   </div>
 </div>

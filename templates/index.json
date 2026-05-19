@@ -26,6 +26,23 @@
         "stat_3_label": "Happy Customers"
       }
     },
+    "brand_marquee_main": {
+      "type": "brand-marquee",
+      "blocks": {
+        "brand_versace": { "type": "brand", "settings": { "name": "VERSACE" } },
+        "brand_zara":    { "type": "brand", "settings": { "name": "ZARA" } },
+        "brand_gucci":   { "type": "brand", "settings": { "name": "GUCCI" } },
+        "brand_prada":   { "type": "brand", "settings": { "name": "PRADA" } },
+        "brand_ck":      { "type": "brand", "settings": { "name": "Calvin Klein" } }
+      },
+      "block_order": ["brand_versace", "brand_zara", "brand_gucci", "brand_prada", "brand_ck"],
+      "settings": {
+        "background_color": "#000000",
+        "text_color": "#ffffff",
+        "speed": 28,
+        "pause_on_hover": true
+      }
+    },
     "product_list_fa6P9H": {
       "type": "product-list",
       "blocks": {
@@ -223,6 +240,7 @@
   },
   "order": [
     "figma_hero_main",
+    "brand_marquee_main",
     "product_list_fa6P9H"
   ]
 }

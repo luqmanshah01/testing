@@ -1,0 +1,239 @@
+
+<div
+  class="brand-marquee"
+  style="
+    --marquee-bg: {{ section.settings.background_color }};
+    --marquee-color: {{ section.settings.text_color }};
+    --marquee-duration: {{ section.settings.speed }}s;
+  "
+>
+  <div class="brand-marquee__inner">
+    <div class="brand-marquee__track{% if section.settings.pause_on_hover %} brand-marquee__track--pause-hover{% endif %}">
+
+      {%- comment -%} First copy {%- endcomment -%}
+      <ul class="brand-marquee__list" role="list">
+        {%- for block in section.blocks -%}
+          <li class="brand-marquee__item" {{ block.shopify_attributes }}>
+            {%- if block.settings.logo != blank -%}
+              {{
+                block.settings.logo
+                | image_url: width: 240
+                | image_tag:
+                  class: 'brand-marquee__logo-img',
+                  loading: 'lazy',
+                  alt: block.settings.name
+              }}
+            {%- else -%}
+              <span class="brand-marquee__logo-text">{{ block.settings.name }}</span>
+            {%- endif -%}
+          </li>
+          {%- unless forloop.last -%}
+            <li class="brand-marquee__sep" aria-hidden="true">
+              <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="3" cy="3" r="3" fill="currentColor" opacity="0.4"/>
+              </svg>
+            </li>
+          {%- endunless -%}
+        {%- endfor -%}
+      </ul>
+
+      {%- comment -%} Duplicate for seamless infinite loop {%- endcomment -%}
+      <ul class="brand-marquee__list" role="list" aria-hidden="true">
+        {%- for block in section.blocks -%}
+          <li class="brand-marquee__item">
+            {%- if block.settings.logo != blank -%}
+              {{
+                block.settings.logo
+                | image_url: width: 240
+                | image_tag:
+                  class: 'brand-marquee__logo-img',
+                  loading: 'lazy',
+                  alt: block.settings.name
+              }}
+            {%- else -%}
+              <span class="brand-marquee__logo-text">{{ block.settings.name }}</span>
+            {%- endif -%}
+          </li>
+          {%- unless forloop.last -%}
+            <li class="brand-marquee__sep" aria-hidden="true">
+              <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="3" cy="3" r="3" fill="currentColor" opacity="0.4"/>
+              </svg>
+            </li>
+          {%- endunless -%}
+        {%- endfor -%}
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  @keyframes brand-marquee-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  .brand-marquee {
+    background-color: var(--marquee-bg, #000000);
+    color: var(--marquee-color, #ffffff);
+    height: 122px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    width: 100%;
+  }
+
+  .brand-marquee__inner {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .brand-marquee__track {
+    display: flex;
+    width: max-content;
+    animation: brand-marquee-scroll var(--marquee-duration, 28s) linear infinite;
+  }
+
+  .brand-marquee__track--pause-hover:hover {
+    animation-play-state: paused;
+  }
+
+  .brand-marquee__list {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 3.5rem;
+    padding-inline: 3.5rem;
+    flex-shrink: 0;
+  }
+
+  .brand-marquee__item {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .brand-marquee__logo-text {
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 500;
+    font-size: clamp(1.1rem, 1.6vw, 1.5rem);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--marquee-color, #ffffff);
+    white-space: nowrap;
+    line-height: 1;
+    opacity: 0.9;
+    transition: opacity 0.2s ease;
+  }
+
+  .brand-marquee__item:hover .brand-marquee__logo-text {
+    opacity: 1;
+  }
+
+  .brand-marquee__logo-img {
+    height: 32px;
+    width: auto;
+    max-width: 140px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: 0.85;
+    transition: opacity 0.2s ease;
+  }
+
+  .brand-marquee__logo-img:hover {
+    opacity: 1;
+  }
+
+  .brand-marquee__sep {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    color: var(--marquee-color, #ffffff);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .brand-marquee__track {
+      animation: none;
+    }
+    .brand-marquee__list:last-child {
+      display: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Brand Marquee",
+  "tag": "section",
+  "class": "brand-marquee-section",
+  "max_blocks": 12,
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text / logo color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Scroll speed (seconds per loop)",
+      "min": 10,
+      "max": 60,
+      "step": 2,
+      "default": 28
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "Pause on hover",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "brand",
+      "name": "Brand",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Brand name",
+          "default": "Brand Name"
+        },
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Logo image (optional — overrides text)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brand Marquee",
+      "blocks": [
+        { "type": "brand", "settings": { "name": "VERSACE" } },
+        { "type": "brand", "settings": { "name": "ZARA" } },
+        { "type": "brand", "settings": { "name": "GUCCI" } },
+        { "type": "brand", "settings": { "name": "PRADA" } },
+        { "type": "brand", "settings": { "name": "Calvin Klein" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -289,7 +289,7 @@
       "block_order": [
         "button_DAm9LV"
       ],
-      "name": "Featured collection",
+      "name": "Featured collection (unused)",
       "settings": {
         "collection": "all",
         "layout_type": "carousel",
@@ -309,11 +309,21 @@
         "padding-block-start": 100,
         "padding-block-end": 48
       }
+    },
+    "figma_new_arrivals_main": {
+      "type": "figma-new-arrivals",
+      "settings": {
+        "heading": "NEW ARRIVALS",
+        "collection": "all",
+        "max_products": 4,
+        "show_stars": true,
+        "show_view_all": true
+      }
     }
   },
   "order": [
     "figma_hero_main",
     "brand_marquee_main",
-    "product_list_fa6P9H"
+    "figma_new_arrivals_main"
   ]
 }

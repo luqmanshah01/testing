@@ -29,11 +29,51 @@
     "brand_marquee_main": {
       "type": "brand-marquee",
       "blocks": {
-        "brand_versace": { "type": "brand", "settings": { "name": "VERSACE", "logo_width": 100 } },
-        "brand_zara":    { "type": "brand", "settings": { "name": "ZARA",    "logo_width": 100 } },
-        "brand_gucci":   { "type": "brand", "settings": { "name": "Gucci",        "logo": "shopify://shop_images/Group_1.png",          "logo_width": 100 } },
-        "brand_prada":   { "type": "brand", "settings": { "name": "Prada",        "logo": "shopify://shop_images/zara-logo-1_1.png",    "logo_width": 100 } },
-        "brand_ck":      { "type": "brand", "settings": { "name": "Calvin Klein", "logo": "shopify://shop_images/Vector.png",           "logo_width": 100 } }
+        "brand_versace": {
+          "type": "brand",
+          "settings": {
+            "svg_asset": "",
+            "logo": "shopify://shop_images/Group_2.png",
+            "name": "",
+            "logo_width": 100
+          }
+        },
+        "brand_zara": {
+          "type": "brand",
+          "settings": {
+            "svg_asset": "",
+            "logo": "shopify://shop_images/prada-logo-1_1.png",
+            "name": "",
+            "logo_width": 100
+          }
+        },
+        "brand_gucci": {
+          "type": "brand",
+          "settings": {
+            "svg_asset": "",
+            "logo": "shopify://shop_images/Group_1.png",
+            "name": "Gucci",
+            "logo_width": 100
+          }
+        },
+        "brand_prada": {
+          "type": "brand",
+          "settings": {
+            "svg_asset": "",
+            "logo": "shopify://shop_images/zara-logo-1_1.png",
+            "name": "Prada",
+            "logo_width": 100
+          }
+        },
+        "brand_ck": {
+          "type": "brand",
+          "settings": {
+            "svg_asset": "",
+            "logo": "shopify://shop_images/Vector.png",
+            "name": "Calvin Klein",
+            "logo_width": 100
+          }
+        }
       },
       "block_order": [
         "brand_versace",

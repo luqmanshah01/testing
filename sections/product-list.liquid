@@ -80,6 +80,109 @@
   </div>
 </div>
 
+{% stylesheet %}
+  /* ─── NEW ARRIVALS heading ─── */
+  .section-resource-list__header .text-block p,
+  .section-resource-list__header .text-block h1,
+  .section-resource-list__header .text-block h2,
+  .section-resource-list__header .text-block h3,
+  .section-resource-list__header .text-block h4 {
+    font-family: 'Satoshi', sans-serif !important;
+    font-weight: 900 !important;
+    font-size: clamp(1.75rem, 3vw, 2.75rem) !important;
+    letter-spacing: 0.02em !important;
+    text-transform: uppercase !important;
+    color: #000000 !important;
+    line-height: 1.1 !important;
+  }
+
+  /* ─── Product card: Figma warm-gray background + rounded corners ─── */
+  .section-resource-list .product-card__content {
+    background-color: #F0EEED !important;
+    border-radius: 14px !important;
+    overflow: hidden !important;
+  }
+
+  /* Image area: padding so image floats inside the gray card */
+  .section-resource-list .image-block {
+    background-color: #F0EEED;
+    padding: 1.25rem 1.25rem 0.75rem !important;
+  }
+
+  .section-resource-list .image-block img {
+    object-fit: contain !important;
+    border-radius: 0 !important;
+  }
+
+  /* Card info area (title + price) */
+  .section-resource-list product-card .text-block {
+    padding-inline: 1rem !important;
+    padding-block-start: 0.5rem !important;
+  }
+
+  .section-resource-list product-card .product-price {
+    padding-inline: 1rem !important;
+    padding-block-end: 1rem !important;
+  }
+
+  /* ─── Product title: bold ─── */
+  .section-resource-list product-card .text-block a,
+  .section-resource-list product-card .text-block span,
+  .section-resource-list product-card .text-block p {
+    font-family: 'Satoshi', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 0.9375rem !important;
+    color: #000000 !important;
+  }
+
+  /* ─── Price: Figma styling ─── */
+  .section-resource-list product-card .price__sale,
+  .section-resource-list product-card .price-item--sale {
+    font-family: 'Satoshi', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+    color: #000000 !important;
+  }
+
+  .section-resource-list product-card .price__regular,
+  .section-resource-list product-card .price-item--regular {
+    font-family: 'Satoshi', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+    color: #000000 !important;
+  }
+
+  .section-resource-list product-card .price__compare,
+  .section-resource-list product-card .price-item--compare,
+  .section-resource-list product-card s {
+    font-weight: 400 !important;
+    color: rgba(0, 0, 0, 0.4) !important;
+    font-size: 0.9rem !important;
+  }
+
+  /* Sale badge */
+  .section-resource-list product-card .badge--sale,
+  .section-resource-list product-card .price__badge-sale {
+    background-color: rgba(243, 63, 63, 0.1) !important;
+    color: #F33F3F !important;
+    border-radius: 62px !important;
+    font-family: 'Satoshi', sans-serif !important;
+    font-size: 0.75rem !important;
+    font-weight: 500 !important;
+    padding: 0.2rem 0.6rem !important;
+    border: none !important;
+  }
+
+  /* Card hover */
+  .section-resource-list product-card {
+    transition: transform 0.2s ease;
+  }
+
+  .section-resource-list product-card:hover {
+    transform: translateY(-3px);
+  }
+{% endstylesheet %}
+
 {% schema %}
 {
   "name": "t:names.product_list",

@@ -21,11 +21,11 @@
       {%- comment -%} First copy {%- endcomment -%}
       <ul class="brand-marquee__list" role="list">
         {%- for block in section.blocks -%}
-          <li class="brand-marquee__item" {{ block.shopify_attributes }}>
+          <li class="brand-marquee__item" style="--logo-scale: {{ block.settings.logo_width | divided_by: 100.0 }};" {{ block.shopify_attributes }}>
             {%- if block.settings.logo != blank -%}
               {{
                 block.settings.logo
-                | image_url: width: 300
+                | image_url: width: 400
                 | image_tag:
                   class: 'brand-marquee__logo-img',
                   loading: 'lazy',
@@ -48,11 +48,11 @@
       {%- comment -%} Duplicate for seamless infinite loop {%- endcomment -%}
       <ul class="brand-marquee__list" role="list" aria-hidden="true">
         {%- for block in section.blocks -%}
-          <li class="brand-marquee__item">
+          <li class="brand-marquee__item" style="--logo-scale: {{ block.settings.logo_width | divided_by: 100.0 }};">
             {%- if block.settings.logo != blank -%}
               {{
                 block.settings.logo
-                | image_url: width: 300
+                | image_url: width: 400
                 | image_tag:
                   class: 'brand-marquee__logo-img',
                   loading: 'lazy',
@@ -144,13 +144,14 @@
   }
 
   .brand-marquee__logo-img {
-    height: var(--marquee-logo-height, 32px);
+    height: calc(var(--marquee-logo-height, 32px) * var(--logo-scale, 1));
     width: auto;
-    max-width: 160px;
+    max-width: 180px;
     object-fit: contain;
     filter: brightness(0) invert(1);
     opacity: var(--marquee-opacity, 0.85);
     transition: opacity 0.2s ease;
+    display: block;
   }
 
   .brand-marquee__logo-img:hover {
@@ -310,18 +311,28 @@
   "blocks": [
     {
       "type": "brand",
-      "name": "Brand",
+      "name": "Logo",
       "settings": [
-        {
-          "type": "text",
-          "id": "name",
-          "label": "Brand name",
-          "default": "Brand Name"
-        },
         {
           "type": "image_picker",
           "id": "logo",
-          "label": "Logo image (optional — overrides text)"
+          "label": "Brand logo image"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Brand name (fallback text if no image)",
+          "default": "Brand"
+        },
+        {
+          "type": "range",
+          "id": "logo_width",
+          "label": "Logo width (%)",
+          "info": "Scale this logo relative to others",
+          "min": 50,
+          "max": 150,
+          "step": 5,
+          "default": 100
         }
       ]
     }

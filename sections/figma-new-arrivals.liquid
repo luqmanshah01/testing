@@ -38,18 +38,16 @@
 
               <p class="na__name">{{ product.title }}</p>
 
-              {%- if section.settings.show_stars -%}
-                <div class="na__rating">
-                  <div class="na__stars" aria-hidden="true">
-                    {%- for i in (1..5) -%}
-                      <svg class="na__star{% if i <= 4 %} na__star--on{% endif %}" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8 1.5l1.545 3.13 3.455.502-2.5 2.437.59 3.44L8 9.385 4.91 11.01l.59-3.44L3 5.132l3.455-.502z"/>
-                      </svg>
-                    {%- endfor -%}
-                  </div>
-                  <span class="na__rating-label">4.5/5</span>
+              <div class="na__rating">
+                <div class="na__stars" aria-hidden="true">
+                  <svg class="na__star na__star--on" viewBox="0 0 20 20"><path d="M10 1l2.39 4.84 5.34.78-3.86 3.76.91 5.32L10 13.27l-4.78 2.51.91-5.32L2.27 6.62l5.34-.78z"/></svg>
+                  <svg class="na__star na__star--on" viewBox="0 0 20 20"><path d="M10 1l2.39 4.84 5.34.78-3.86 3.76.91 5.32L10 13.27l-4.78 2.51.91-5.32L2.27 6.62l5.34-.78z"/></svg>
+                  <svg class="na__star na__star--on" viewBox="0 0 20 20"><path d="M10 1l2.39 4.84 5.34.78-3.86 3.76.91 5.32L10 13.27l-4.78 2.51.91-5.32L2.27 6.62l5.34-.78z"/></svg>
+                  <svg class="na__star na__star--on" viewBox="0 0 20 20"><path d="M10 1l2.39 4.84 5.34.78-3.86 3.76.91 5.32L10 13.27l-4.78 2.51.91-5.32L2.27 6.62l5.34-.78z"/></svg>
+                  <svg class="na__star" viewBox="0 0 20 20"><path d="M10 1l2.39 4.84 5.34.78-3.86 3.76.91 5.32L10 13.27l-4.78 2.51.91-5.32L2.27 6.62l5.34-.78z"/></svg>
                 </div>
-              {%- endif -%}
+                <span class="na__rating-label">4.5/5</span>
+              </div>
 
               <div class="na__price-row">
                 {%- if on_sale -%}
@@ -225,10 +223,15 @@
   }
 
   .na__star {
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
     fill: #E8E8E8;
     flex-shrink: 0;
+    display: block;
+  }
+
+  .na__star path {
+    fill: inherit;
   }
 
   .na__star--on {

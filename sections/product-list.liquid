@@ -96,32 +96,39 @@
     line-height: 1.1 !important;
   }
 
-  /* ─── Product card: Figma warm-gray background + rounded corners ─── */
+  /* ─── Product card: rounded corners, white base ─── */
   .section-resource-list .product-card__content {
-    background-color: #F0EEED !important;
+    background-color: #ffffff !important;
     border-radius: 14px !important;
     overflow: hidden !important;
+    border: 1px solid #f0f0f0 !important;
   }
 
-  /* Image area: padding so image floats inside the gray card */
+  /* Image area: gray background with padding */
   .section-resource-list .image-block {
-    background-color: #F0EEED;
-    padding: 1.25rem 1.25rem 0.75rem !important;
+    background-color: #F0EEED !important;
+    padding: 1.5rem !important;
+    margin: 0 !important;
   }
 
   .section-resource-list .image-block img {
     object-fit: contain !important;
     border-radius: 0 !important;
+    aspect-ratio: 1 / 1 !important;
+    width: 100% !important;
+    height: auto !important;
   }
 
-  /* Card info area (title + price) */
+  /* Info area: white background, padding */
   .section-resource-list product-card .text-block {
-    padding-inline: 1rem !important;
-    padding-block-start: 0.5rem !important;
+    background-color: #ffffff !important;
+    padding-inline: 0.875rem !important;
+    padding-block-start: 0.75rem !important;
   }
 
   .section-resource-list product-card .product-price {
-    padding-inline: 1rem !important;
+    background-color: #ffffff !important;
+    padding-inline: 0.875rem !important;
     padding-block-end: 1rem !important;
   }
 

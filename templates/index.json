@@ -29,16 +29,58 @@
     "brand_marquee_main": {
       "type": "brand-marquee",
       "blocks": {
-        "brand_versace": { "type": "brand", "settings": { "name": "VERSACE" } },
-        "brand_zara":    { "type": "brand", "settings": { "name": "ZARA" } },
-        "brand_gucci":   { "type": "brand", "settings": { "name": "GUCCI" } },
-        "brand_prada":   { "type": "brand", "settings": { "name": "PRADA" } },
-        "brand_ck":      { "type": "brand", "settings": { "name": "Calvin Klein" } }
+        "brand_versace": {
+          "type": "brand",
+          "settings": {
+            "name": "VERSACE"
+          }
+        },
+        "brand_zara": {
+          "type": "brand",
+          "settings": {
+            "name": "ZARA"
+          }
+        },
+        "brand_gucci": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/Group_1.png",
+            "name": ""
+          }
+        },
+        "brand_prada": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/zara-logo-1_1.png",
+            "name": ""
+          }
+        },
+        "brand_ck": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/Vector.png",
+            "name": ""
+          }
+        }
       },
-      "block_order": ["brand_versace", "brand_zara", "brand_gucci", "brand_prada", "brand_ck"],
+      "block_order": [
+        "brand_versace",
+        "brand_zara",
+        "brand_gucci",
+        "brand_prada",
+        "brand_ck"
+      ],
       "settings": {
         "background_color": "#000000",
         "text_color": "#ffffff",
+        "height": 86,
+        "item_gap": 52,
+        "show_border": true,
+        "font_size": 16,
+        "font_weight": "500",
+        "letter_spacing": 12,
+        "text_opacity": 90,
+        "logo_height": 40,
         "speed": 28,
         "pause_on_hover": true
       }

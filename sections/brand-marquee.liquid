@@ -5,6 +5,14 @@
     --marquee-bg: {{ section.settings.background_color }};
     --marquee-color: {{ section.settings.text_color }};
     --marquee-duration: {{ section.settings.speed }}s;
+    --marquee-height: {{ section.settings.height }}px;
+    --marquee-font-size: {{ section.settings.font_size }}px;
+    --marquee-font-weight: {{ section.settings.font_weight }};
+    --marquee-letter-spacing: {{ section.settings.letter_spacing | divided_by: 100.0 }}em;
+    --marquee-gap: {{ section.settings.item_gap }}px;
+    --marquee-logo-height: {{ section.settings.logo_height }}px;
+    --marquee-opacity: {{ section.settings.text_opacity | divided_by: 100.0 }};
+    --marquee-border: {% if section.settings.show_border %}1px solid rgba(255,255,255,0.1){% else %}none{% endif %};
   "
 >
   <div class="brand-marquee__inner">
@@ -17,7 +25,7 @@
             {%- if block.settings.logo != blank -%}
               {{
                 block.settings.logo
-                | image_url: width: 240
+                | image_url: width: 300
                 | image_tag:
                   class: 'brand-marquee__logo-img',
                   loading: 'lazy',
@@ -30,7 +38,7 @@
           {%- unless forloop.last -%}
             <li class="brand-marquee__sep" aria-hidden="true">
               <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="3" cy="3" r="3" fill="currentColor" opacity="0.4"/>
+                <circle cx="3" cy="3" r="3" fill="currentColor" opacity="0.35"/>
               </svg>
             </li>
           {%- endunless -%}
@@ -44,7 +52,7 @@
             {%- if block.settings.logo != blank -%}
               {{
                 block.settings.logo
-                | image_url: width: 240
+                | image_url: width: 300
                 | image_tag:
                   class: 'brand-marquee__logo-img',
                   loading: 'lazy',
@@ -57,7 +65,7 @@
           {%- unless forloop.last -%}
             <li class="brand-marquee__sep" aria-hidden="true">
               <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="3" cy="3" r="3" fill="currentColor" opacity="0.4"/>
+                <circle cx="3" cy="3" r="3" fill="currentColor" opacity="0.35"/>
               </svg>
             </li>
           {%- endunless -%}
@@ -77,12 +85,12 @@
   .brand-marquee {
     background-color: var(--marquee-bg, #000000);
     color: var(--marquee-color, #ffffff);
-    height: 122px;
+    height: var(--marquee-height, 122px);
     overflow: hidden;
     display: flex;
     align-items: center;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: var(--marquee-border, 1px solid rgba(255,255,255,0.1));
+    border-bottom: var(--marquee-border, 1px solid rgba(255,255,255,0.1));
     width: 100%;
   }
 
@@ -107,8 +115,8 @@
     list-style: none;
     margin: 0;
     padding: 0;
-    gap: 3.5rem;
-    padding-inline: 3.5rem;
+    gap: var(--marquee-gap, 56px);
+    padding-inline: calc(var(--marquee-gap, 56px) / 1);
     flex-shrink: 0;
   }
 
@@ -120,14 +128,14 @@
 
   .brand-marquee__logo-text {
     font-family: 'Satoshi', sans-serif;
-    font-weight: 500;
-    font-size: clamp(1.1rem, 1.6vw, 1.5rem);
-    letter-spacing: 0.12em;
+    font-weight: var(--marquee-font-weight, 500);
+    font-size: var(--marquee-font-size, 16px);
+    letter-spacing: var(--marquee-letter-spacing, 0.12em);
     text-transform: uppercase;
     color: var(--marquee-color, #ffffff);
     white-space: nowrap;
     line-height: 1;
-    opacity: 0.9;
+    opacity: var(--marquee-opacity, 0.9);
     transition: opacity 0.2s ease;
   }
 
@@ -136,12 +144,12 @@
   }
 
   .brand-marquee__logo-img {
-    height: 32px;
+    height: var(--marquee-logo-height, 32px);
     width: auto;
-    max-width: 140px;
+    max-width: 160px;
     object-fit: contain;
     filter: brightness(0) invert(1);
-    opacity: 0.85;
+    opacity: var(--marquee-opacity, 0.85);
     transition: opacity 0.2s ease;
   }
 
@@ -177,6 +185,10 @@
   },
   "settings": [
     {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
       "type": "color",
       "id": "background_color",
       "label": "Background color",
@@ -189,10 +201,101 @@
       "default": "#ffffff"
     },
     {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "height",
+      "label": "Section height (px)",
+      "min": 60,
+      "max": 200,
+      "step": 2,
+      "default": 122
+    },
+    {
+      "type": "range",
+      "id": "item_gap",
+      "label": "Gap between items (px)",
+      "min": 20,
+      "max": 120,
+      "step": 4,
+      "default": 56
+    },
+    {
+      "type": "checkbox",
+      "id": "show_border",
+      "label": "Show top & bottom border",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Font size (px)",
+      "min": 10,
+      "max": 32,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "font_weight",
+      "label": "Font weight",
+      "options": [
+        { "value": "300", "label": "Light (300)" },
+        { "value": "400", "label": "Regular (400)" },
+        { "value": "500", "label": "Medium (500)" },
+        { "value": "700", "label": "Bold (700)" },
+        { "value": "900", "label": "Black (900)" }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "range",
+      "id": "letter_spacing",
+      "label": "Letter spacing (1/100 em)",
+      "info": "e.g. 12 = 0.12em",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "text_opacity",
+      "label": "Text / logo opacity (%)",
+      "min": 30,
+      "max": 100,
+      "step": 5,
+      "default": 90
+    },
+    {
+      "type": "header",
+      "content": "Logo images"
+    },
+    {
+      "type": "range",
+      "id": "logo_height",
+      "label": "Logo image height (px)",
+      "min": 16,
+      "max": 80,
+      "step": 2,
+      "default": 32
+    },
+    {
+      "type": "header",
+      "content": "Animation"
+    },
+    {
       "type": "range",
       "id": "speed",
       "label": "Scroll speed (seconds per loop)",
-      "min": 10,
+      "info": "Lower = faster",
+      "min": 8,
       "max": 60,
       "step": 2,
       "default": 28

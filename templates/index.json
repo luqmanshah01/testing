@@ -97,15 +97,6 @@
         "pause_on_hover": true
       }
     },
-    "figma_top_selling_hJg3BA": {
-      "type": "figma-top-selling",
-      "name": "Top Selling",
-      "settings": {
-        "heading": "TOP SELLING",
-        "collection": "top-selling",
-        "max_products": 4
-      }
-    },
     "figma_new_arrivals_yxELFf": {
       "type": "figma-new-arrivals",
       "name": "New Arrivals",
@@ -116,12 +107,21 @@
         "show_stars": true,
         "show_view_all": true
       }
+    },
+    "figma_top_selling_hJg3BA": {
+      "type": "figma-top-selling",
+      "name": "Top Selling",
+      "settings": {
+        "heading": "TOP SELLING",
+        "collection": "top-selling",
+        "max_products": 4
+      }
     }
   },
   "order": [
     "figma_hero_main",
     "brand_marquee_main",
-    "figma_top_selling_hJg3BA",
-    "figma_new_arrivals_yxELFf"
+    "figma_new_arrivals_yxELFf",
+    "figma_top_selling_hJg3BA"
   ]
 }

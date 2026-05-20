@@ -147,7 +147,8 @@
         "style_gym": {
           "type": "style",
           "settings": {
-            "label": "Gym",
+            "label": "",
+            "image": "shopify://shop_images/Frame_63.png",
             "link": ""
           }
         }

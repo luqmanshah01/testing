@@ -123,7 +123,7 @@
         "style_casual": {
           "type": "style",
           "settings": {
-            "label": "Casual",
+            "label": "",
             "image": "shopify://shop_images/Frame_61.png",
             "link": ""
           }

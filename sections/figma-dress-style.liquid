@@ -6,41 +6,65 @@
       <h2 class="ds__title">{{ section.settings.heading }}</h2>
 
       <div class="ds__grid">
-        {%- for block in section.blocks -%}
-          <a
-            href="{{ block.settings.link | default: routes.collections_url }}"
-            class="ds__card"
-            {{ block.shopify_attributes }}
-          >
-            <span class="ds__label">{{ block.settings.label }}</span>
-            <div class="ds__card-img">
-              {%- if block.settings.image != blank -%}
-                {{
-                  block.settings.image
-                  | image_url: width: 600
-                  | image_tag:
-                    class: 'ds__img',
-                    loading: 'lazy',
-                    alt: block.settings.label,
-                    widths: '300, 400, 600',
-                    sizes: '(min-width: 750px) 30vw, 50vw'
-                }}
-              {%- else -%}
-                {{ 'lifestyle-1' | placeholder_svg_tag: 'ds__img ds__img--ph' }}
-              {%- endif -%}
-            </div>
-          </a>
-        {%- else -%}
-          {%- assign default_labels = 'Casual,Formal,Party,Gym' | split: ',' -%}
-          {%- for label in default_labels -%}
-            <div class="ds__card">
-              <span class="ds__label">{{ label }}</span>
+
+        <!-- Row 1: narrow (407) left + wide (684) right -->
+        <div class="ds__row">
+          {%- for block in section.blocks limit: 2 -%}
+            <a
+              href="{{ block.settings.link | default: routes.collections_url }}"
+              class="ds__card {% if forloop.index == 1 %}ds__card--sm{% else %}ds__card--lg{% endif %}"
+              {{ block.shopify_attributes }}
+            >
+              <span class="ds__label">{{ block.settings.label }}</span>
               <div class="ds__card-img">
-                {{ 'lifestyle-1' | placeholder_svg_tag: 'ds__img ds__img--ph' }}
+                {%- if block.settings.image != blank -%}
+                  {{
+                    block.settings.image
+                    | image_url: width: 700
+                    | image_tag:
+                      class: 'ds__img',
+                      loading: 'lazy',
+                      alt: block.settings.label,
+                      widths: '300, 500, 700',
+                      sizes: '(min-width: 750px) 40vw, 80vw'
+                  }}
+                {%- else -%}
+                  {{ 'lifestyle-1' | placeholder_svg_tag: 'ds__img ds__img--ph' }}
+                {%- endif -%}
               </div>
-            </div>
+            </a>
           {%- endfor -%}
-        {%- endfor -%}
+        </div>
+
+        <!-- Row 2: wide (684) left + narrow (407) right -->
+        <div class="ds__row">
+          {%- for block in section.blocks offset: 2 limit: 2 -%}
+            <a
+              href="{{ block.settings.link | default: routes.collections_url }}"
+              class="ds__card {% if forloop.index == 1 %}ds__card--lg{% else %}ds__card--sm{% endif %}"
+              {{ block.shopify_attributes }}
+            >
+              <span class="ds__label">{{ block.settings.label }}</span>
+              <div class="ds__card-img">
+                {%- if block.settings.image != blank -%}
+                  {{
+                    block.settings.image
+                    | image_url: width: 700
+                    | image_tag:
+                      class: 'ds__img',
+                      loading: 'lazy',
+                      alt: block.settings.label,
+                      widths: '300, 500, 700',
+                      sizes: '(min-width: 750px) 40vw, 80vw'
+                  }}
+                {%- else -%}
+                  {{ 'lifestyle-1' | placeholder_svg_tag: 'ds__img ds__img--ph' }}
+                {%- endif -%}
+              </div>
+            </a>
+          {%- endfor -%}
+        </div>
+
       </div>
 
     </div>
@@ -66,6 +90,7 @@
     .ds__wrap { padding-inline: 4rem; }
   }
 
+  /* ─── Gray rounded outer container ─── */
   .ds__container {
     background-color: #F0EEED;
     border-radius: 20px;
@@ -76,6 +101,7 @@
     .ds__container { padding: 1.25rem; }
   }
 
+  /* ─── Heading ─── */
   .ds__title {
     font-family: 'Satoshi', sans-serif;
     font-weight: 900;
@@ -88,39 +114,35 @@
     margin: 0 0 1.5rem;
   }
 
-  /* ─── Grid: 5 equal columns so we can make cards different widths ─── */
+  /* ─── Two flex rows stacked ─── */
   .ds__grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: 200px 200px;
-    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
   }
 
-  /* Row 1: small (2/5) left, large (3/5) right */
-  .ds__card:nth-child(1) { grid-column: span 2; }
-  .ds__card:nth-child(2) { grid-column: span 3; }
-  /* Row 2: large (3/5) left, small (2/5) right */
-  .ds__card:nth-child(3) { grid-column: span 3; }
-  .ds__card:nth-child(4) { grid-column: span 2; }
-
-  @media screen and (max-width: 749px) {
-    .ds__grid {
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 140px 140px;
-    }
-    .ds__card:nth-child(1),
-    .ds__card:nth-child(2),
-    .ds__card:nth-child(3),
-    .ds__card:nth-child(4) {
-      grid-column: span 1;
-    }
+  .ds__row {
+    display: flex;
+    gap: 20px;
+    height: 289px;
   }
 
-  /* ─── Card ─── */
+  /* ─── Card sizes using exact Figma ratios ─── */
+  .ds__card--sm {
+    flex: 407;
+    min-width: 0;
+  }
+
+  .ds__card--lg {
+    flex: 684;
+    min-width: 0;
+  }
+
+  /* ─── Card base ─── */
   .ds__card {
     position: relative;
     background-color: #ffffff;
-    border-radius: 14px;
+    border-radius: 20px;
     overflow: hidden;
     text-decoration: none;
     color: inherit;
@@ -135,8 +157,8 @@
   /* ─── Label ─── */
   .ds__label {
     position: absolute;
-    top: 1rem;
-    left: 1rem;
+    top: 1.25rem;
+    left: 1.25rem;
     font-family: 'Satoshi', sans-serif;
     font-weight: 700;
     font-size: 1rem;
@@ -145,7 +167,7 @@
     line-height: 1;
   }
 
-  /* ─── Image container: right 60%, full card height ─── */
+  /* ─── Image: right 60%, full height ─── */
   .ds__card-img {
     position: absolute;
     right: 0;
@@ -168,6 +190,17 @@
     opacity: 0.15;
     width: 100%;
     height: 100%;
+  }
+
+  /* ─── Mobile: equal 2 columns, shorter height ─── */
+  @media screen and (max-width: 749px) {
+    .ds__row {
+      height: 140px;
+    }
+    .ds__card--sm,
+    .ds__card--lg {
+      flex: 1;
+    }
   }
 
 {% endstylesheet %}

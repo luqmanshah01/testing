@@ -132,6 +132,7 @@
           "type": "style",
           "settings": {
             "label": "Formal",
+            "image": "shopify://shop_images/Frame_62.png",
             "link": ""
           }
         },
@@ -139,6 +140,7 @@
           "type": "style",
           "settings": {
             "label": "Party",
+            "image": "shopify://shop_images/Frame_64.png",
             "link": ""
           }
         },

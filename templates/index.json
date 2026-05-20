@@ -116,12 +116,26 @@
         "collection": "top-selling",
         "max_products": 4
       }
+    },
+    "figma_dress_style_main": {
+      "type": "figma-dress-style",
+      "settings": {
+        "heading": "BROWSE BY DRESS STYLE"
+      },
+      "blocks": {
+        "style_casual": { "type": "style", "settings": { "label": "Casual" } },
+        "style_formal": { "type": "style", "settings": { "label": "Formal" } },
+        "style_party":  { "type": "style", "settings": { "label": "Party" } },
+        "style_gym":    { "type": "style", "settings": { "label": "Gym" } }
+      },
+      "block_order": ["style_casual", "style_formal", "style_party", "style_gym"]
     }
   },
   "order": [
     "figma_hero_main",
     "brand_marquee_main",
     "figma_new_arrivals_yxELFf",
-    "figma_top_selling_hJg3BA"
+    "figma_top_selling_hJg3BA",
+    "figma_dress_style_main"
   ]
 }

@@ -90,9 +90,15 @@
 
   .ds__grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 1rem;
   }
+
+  /* Diagonal alternating: small-large / large-small */
+  .ds__card:nth-child(1) { grid-column: span 2; }
+  .ds__card:nth-child(2) { grid-column: span 3; }
+  .ds__card:nth-child(3) { grid-column: span 3; }
+  .ds__card:nth-child(4) { grid-column: span 2; }
 
   .ds__card {
     position: relative;
@@ -101,7 +107,7 @@
     overflow: hidden;
     text-decoration: none;
     color: inherit;
-    aspect-ratio: 2 / 1;
+    aspect-ratio: 3 / 2;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
 

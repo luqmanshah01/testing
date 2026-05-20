@@ -6,41 +6,41 @@
       <h2 class="ds__title">{{ section.settings.heading }}</h2>
 
       <div class="ds__grid">
-      {%- for block in section.blocks -%}
-        <a
-          href="{{ block.settings.link | default: routes.collections_url }}"
-          class="ds__card"
-          {{ block.shopify_attributes }}
-        >
-          <span class="ds__label">{{ block.settings.label }}</span>
-          <div class="ds__card-img">
-            {%- if block.settings.image != blank -%}
-              {{
-                block.settings.image
-                | image_url: width: 600
-                | image_tag:
-                  class: 'ds__img',
-                  loading: 'lazy',
-                  alt: block.settings.label,
-                  widths: '300, 400, 600',
-                  sizes: '(min-width: 750px) 33vw, 50vw'
-              }}
-            {%- else -%}
-              {{ 'lifestyle-1' | placeholder_svg_tag: 'ds__img ds__img--ph' }}
-            {%- endif -%}
-          </div>
-        </a>
-      {%- else -%}
-        {%- assign default_labels = 'Casual,Formal,Party,Gym' | split: ',' -%}
-        {%- for label in default_labels -%}
-          <div class="ds__card">
-            <span class="ds__label">{{ label }}</span>
+        {%- for block in section.blocks -%}
+          <a
+            href="{{ block.settings.link | default: routes.collections_url }}"
+            class="ds__card"
+            {{ block.shopify_attributes }}
+          >
+            <span class="ds__label">{{ block.settings.label }}</span>
             <div class="ds__card-img">
-              {{ 'lifestyle-1' | placeholder_svg_tag: 'ds__img ds__img--ph' }}
+              {%- if block.settings.image != blank -%}
+                {{
+                  block.settings.image
+                  | image_url: width: 600
+                  | image_tag:
+                    class: 'ds__img',
+                    loading: 'lazy',
+                    alt: block.settings.label,
+                    widths: '300, 400, 600',
+                    sizes: '(min-width: 750px) 30vw, 50vw'
+                }}
+              {%- else -%}
+                {{ 'lifestyle-1' | placeholder_svg_tag: 'ds__img ds__img--ph' }}
+              {%- endif -%}
             </div>
-          </div>
+          </a>
+        {%- else -%}
+          {%- assign default_labels = 'Casual,Formal,Party,Gym' | split: ',' -%}
+          {%- for label in default_labels -%}
+            <div class="ds__card">
+              <span class="ds__label">{{ label }}</span>
+              <div class="ds__card-img">
+                {{ 'lifestyle-1' | placeholder_svg_tag: 'ds__img ds__img--ph' }}
+              </div>
+            </div>
+          {%- endfor -%}
         {%- endfor -%}
-      {%- endfor -%}
       </div>
 
     </div>
@@ -73,7 +73,7 @@
   }
 
   @media screen and (max-width: 749px) {
-    .ds__container { padding: 1.5rem; }
+    .ds__container { padding: 1.25rem; }
   }
 
   .ds__title {
@@ -85,21 +85,38 @@
     color: #000000;
     letter-spacing: -0.01em;
     line-height: 1.1;
-    margin: 0 0 2rem;
+    margin: 0 0 1.5rem;
   }
 
+  /* ─── Grid: 5 equal columns so we can make cards different widths ─── */
   .ds__grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: 200px 200px;
     gap: 1rem;
   }
 
-  /* Diagonal alternating: small-large / large-small */
+  /* Row 1: small (2/5) left, large (3/5) right */
   .ds__card:nth-child(1) { grid-column: span 2; }
   .ds__card:nth-child(2) { grid-column: span 3; }
+  /* Row 2: large (3/5) left, small (2/5) right */
   .ds__card:nth-child(3) { grid-column: span 3; }
   .ds__card:nth-child(4) { grid-column: span 2; }
 
+  @media screen and (max-width: 749px) {
+    .ds__grid {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 140px 140px;
+    }
+    .ds__card:nth-child(1),
+    .ds__card:nth-child(2),
+    .ds__card:nth-child(3),
+    .ds__card:nth-child(4) {
+      grid-column: span 1;
+    }
+  }
+
+  /* ─── Card ─── */
   .ds__card {
     position: relative;
     background-color: #ffffff;
@@ -107,7 +124,6 @@
     overflow: hidden;
     text-decoration: none;
     color: inherit;
-    aspect-ratio: 3 / 2;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
 
@@ -116,6 +132,7 @@
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
   }
 
+  /* ─── Label ─── */
   .ds__label {
     position: absolute;
     top: 1rem;
@@ -128,24 +145,27 @@
     line-height: 1;
   }
 
+  /* ─── Image container: right 60%, full card height ─── */
   .ds__card-img {
     position: absolute;
     right: 0;
     top: 0;
     width: 60%;
     height: 100%;
+    overflow: hidden;
   }
 
   .ds__img {
-    width: 100%;
-    height: 100%;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
     object-fit: cover;
     object-position: top center;
     display: block;
   }
 
   .ds__img--ph {
-    opacity: 0.2;
+    opacity: 0.15;
     width: 100%;
     height: 100%;
   }

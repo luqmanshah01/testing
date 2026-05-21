@@ -117,6 +117,56 @@
         "max_products": 4
       }
     },
+    "figma_happy_customers_main": {
+      "type": "figma-happy-customers",
+      "blocks": {
+        "review_sarah": {
+          "type": "review",
+          "settings": {
+            "name": "Sarah M.",
+            "rating": 5,
+            "verified": true,
+            "review": "\"I'm blown away by the quality and style of the clothes I received. From casual wear to elegant dresses, every piece I've bought has exceeded my expectations.\""
+          }
+        },
+        "review_alex": {
+          "type": "review",
+          "settings": {
+            "name": "Alex K.",
+            "rating": 5,
+            "verified": true,
+            "review": "\"Finding clothes that align with my personal style used to be a challenge until I discovered Shop.co. The range of options they offer is truly remarkable, catering to a variety of tastes and occasions.\""
+          }
+        },
+        "review_james": {
+          "type": "review",
+          "settings": {
+            "name": "James L.",
+            "rating": 5,
+            "verified": true,
+            "review": "\"As someone who's always on the lookout for unique fashion pieces, I'm thrilled to have stumbled upon Shop.co. The selection of clothes is not only diverse but also on-point with the latest trends.\""
+          }
+        },
+        "review_mooa": {
+          "type": "review",
+          "settings": {
+            "name": "Mooa S.",
+            "rating": 5,
+            "verified": true,
+            "review": "\"As someone who's always on the lookout for unique fashion pieces, I'm thrilled to have stumbled upon Shop.co. The selection of clothes is not only diverse but also on-point with the latest trends.\""
+          }
+        }
+      },
+      "block_order": [
+        "review_sarah",
+        "review_alex",
+        "review_james",
+        "review_mooa"
+      ],
+      "settings": {
+        "heading": "OUR HAPPY CUSTOMERS"
+      }
+    },
     "figma_dress_style_main": {
       "type": "figma-dress-style",
       "blocks": {
@@ -173,6 +223,7 @@
     "brand_marquee_main",
     "figma_new_arrivals_yxELFf",
     "figma_top_selling_hJg3BA",
+    "figma_happy_customers_main",
     "figma_dress_style_main"
   ]
 }

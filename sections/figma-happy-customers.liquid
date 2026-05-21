@@ -4,57 +4,66 @@
 <div class="hc" id="{{ slider_id }}">
   <div class="hc__wrap page-width">
 
-    <div class="hc__header">
-      <h2 class="hc__title">{{ section.settings.heading }}</h2>
-      <div class="hc__arrows" role="group" aria-label="Scroll reviews">
-        <button
-          class="hc__arrow"
-          aria-label="Previous reviews"
-          data-hc-target="{{ slider_id }}"
-          data-hc-dir="prev"
-        >&#8592;</button>
-        <button
-          class="hc__arrow"
-          aria-label="Next reviews"
-          data-hc-target="{{ slider_id }}"
-          data-hc-dir="next"
-        >&#8594;</button>
+    <h2 class="hc__title">{{ section.settings.heading }}</h2>
+
+    <div class="hc__carousel">
+
+      <button
+        class="hc__arrow hc__arrow--prev"
+        aria-label="Previous reviews"
+        data-hc-target="{{ slider_id }}"
+        data-hc-dir="prev"
+      >
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M13 16l-6-6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+      <div class="hc__track" data-hc-track>
+        {%- for block in section.blocks -%}
+          <article class="hc__card" {{ block.shopify_attributes }}>
+
+            <div class="hc__stars" aria-label="{{ block.settings.rating }} out of 5 stars">
+              {%- for i in (1..5) -%}
+                <svg
+                  class="hc__star{% if i <= block.settings.rating %} hc__star--on{% endif %}"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                ><path d="M12 2l2.9 5.87 6.48.94-4.69 4.57 1.11 6.46L12 16.9l-5.8 3.05 1.11-6.46L2.62 8.81l6.48-.94z"/></svg>
+              {%- endfor -%}
+            </div>
+
+            <div class="hc__reviewer">
+              <span class="hc__name">{{ block.settings.name }}</span>
+              {%- if block.settings.verified -%}
+                <span class="hc__verified" aria-label="Verified buyer">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <circle cx="10" cy="10" r="10" fill="#01AB31"/>
+                    <path d="M6 10.5l2.5 2.5 5.5-5.5" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              {%- endif -%}
+            </div>
+
+            <p class="hc__text">{{ block.settings.review }}</p>
+
+          </article>
+        {%- endfor -%}
       </div>
+
+      <button
+        class="hc__arrow hc__arrow--next"
+        aria-label="Next reviews"
+        data-hc-target="{{ slider_id }}"
+        data-hc-dir="next"
+      >
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M7 4l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+
     </div>
-
-    <div class="hc__track" data-hc-track>
-      {%- for block in section.blocks -%}
-        <article class="hc__card" {{ block.shopify_attributes }}>
-
-          <div class="hc__stars" aria-label="{{ block.settings.rating }} out of 5 stars">
-            {%- for i in (1..5) -%}
-              <svg
-                class="hc__star{% if i <= block.settings.rating %} hc__star--on{% endif %}"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-              ><path d="M12 2l2.9 5.87 6.48.94-4.69 4.57 1.11 6.46L12 16.9l-5.8 3.05 1.11-6.46L2.62 8.81l6.48-.94z"/></svg>
-            {%- endfor -%}
-          </div>
-
-          <div class="hc__reviewer">
-            <span class="hc__name">{{ block.settings.name }}</span>
-            {%- if block.settings.verified -%}
-              <span class="hc__verified" aria-label="Verified buyer">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                  <circle cx="10" cy="10" r="10" fill="#01AB31"/>
-                  <path d="M6 10.5l2.5 2.5 5.5-5.5" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-            {%- endif -%}
-          </div>
-
-          <p class="hc__text">{{ block.settings.review }}</p>
-
-        </article>
-      {%- endfor -%}
-    </div>
-
   </div>
 </div>
 
@@ -71,9 +80,9 @@
           if (!track) return;
           var card = track.querySelector('.hc__card');
           if (!card) return;
-          var gap = 20;
-          var amount = card.offsetWidth + gap;
-          track.scrollBy({ left: dir === 'next' ? amount : -amount, behavior: 'smooth' });
+          var style = window.getComputedStyle(track);
+          var gap = parseFloat(style.gap) || 20;
+          track.scrollBy({ left: dir === 'next' ? card.offsetWidth + gap : -(card.offsetWidth + gap), behavior: 'smooth' });
         });
       });
     }
@@ -88,7 +97,6 @@
   .hc {
     background-color: #ffffff;
     padding-block: 4rem 5rem;
-    overflow: hidden;
   }
 
   .hc__wrap {
@@ -103,16 +111,7 @@
     .hc__wrap { padding-inline: 4rem; }
   }
 
-  /* ─── Header row ─── */
-  .hc__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-  }
-
-  /* ─── Heading — matches Figma large bold uppercase ─── */
+  /* ─── Heading ─── */
   .hc__title {
     font-family: 'Satoshi', sans-serif;
     font-weight: 900;
@@ -121,33 +120,33 @@
     text-transform: uppercase;
     letter-spacing: -0.03em;
     line-height: 1.0;
-    margin: 0;
+    margin: 0 0 2rem;
   }
 
-  /* ─── Arrows — plain bordered circles matching Figma ─── */
-  .hc__arrows {
+  /* ─── Carousel row: arrow | track | arrow ─── */
+  .hc__carousel {
     display: flex;
-    gap: 0.5rem;
-    flex-shrink: 0;
     align-items: center;
+    gap: 1rem;
   }
 
+  /* ─── Arrow buttons — left & right, vertically centered ─── */
   .hc__arrow {
-    width: 44px;
-    height: 44px;
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
     border-radius: 50%;
     border: 1px solid rgba(0, 0, 0, 0.2);
-    background: transparent;
+    background: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     color: #000000;
-    font-size: 1.125rem;
-    line-height: 1;
     transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
     padding: 0;
     flex-shrink: 0;
+    align-self: center;
   }
 
   .hc__arrow:hover {
@@ -156,8 +155,14 @@
     color: #ffffff;
   }
 
-  /* ─── Scrollable track ─── */
+  .hc__arrow svg {
+    display: block;
+    flex-shrink: 0;
+  }
+
+  /* ─── Scrollable track — fills space between arrows ─── */
   .hc__track {
+    flex: 1;
     display: flex;
     gap: 1.25rem;
     overflow-x: auto;
@@ -165,19 +170,16 @@
     scroll-behavior: smooth;
     -ms-overflow-style: none;
     scrollbar-width: none;
-    /* show partial 4th card as hint */
-    padding-right: 3rem;
   }
 
   .hc__track::-webkit-scrollbar {
     display: none;
   }
 
-  /* ─── Card — 3 visible + partial 4th ─── */
+  /* ─── Card — 3 visible inside the track ─── */
   .hc__card {
-    /* (100% - 2 gaps between 3 cards - 3rem right hint) / 3 */
-    flex: 0 0 calc((100% - 2.5rem - 2.5rem - 3rem) / 3);
-    min-width: 240px;
+    flex: 0 0 calc((100% - 2 * 1.25rem) / 3);
+    min-width: 220px;
     background: #ffffff;
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 12px;
@@ -191,16 +193,21 @@
 
   @media screen and (max-width: 989px) {
     .hc__card {
-      flex: 0 0 calc((100% - 1.25rem - 3rem) / 2);
+      flex: 0 0 calc((100% - 1.25rem) / 2);
     }
   }
 
   @media screen and (max-width: 749px) {
-    .hc__card {
-      flex: 0 0 82vw;
+    .hc__carousel {
+      gap: 0.5rem;
     }
-    .hc__track {
-      padding-right: 1rem;
+    .hc__arrow {
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+    }
+    .hc__card {
+      flex: 0 0 78vw;
     }
   }
 

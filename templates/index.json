@@ -124,6 +124,7 @@
           "type": "style",
           "settings": {
             "label": "",
+            "label_image": "shopify://shop_images/Casual_b766921c-aa4d-4e86-94ff-ec231b8355e6.png",
             "image": "shopify://shop_images/bf5be06b-af14-45e7-a7a7-fa116aa2858d_219b0918-44c8-4d5a-9e07-acfa6987bca5.png",
             "link": ""
           }
@@ -132,6 +133,7 @@
           "type": "style",
           "settings": {
             "label": "Formal",
+            "label_image": "shopify://shop_images/Formal_53cde84d-7c84-4df3-876a-4049896ba644.png",
             "image": "shopify://shop_images/061cb53b-fcee-49a6-ac0e-70b671556e32_d60bd98e-6f84-4e4b-bcb1-389ba4d545e5.png",
             "link": ""
           }
@@ -140,6 +142,7 @@
           "type": "style",
           "settings": {
             "label": "Party",
+            "label_image": "shopify://shop_images/Party_d4c337c3-89a3-4c97-b144-3e0a65a853c3.png",
             "image": "shopify://shop_images/5ae3dad9-f9e2-4073-a061-e671836304ec_85bea2dc-3593-4710-bafc-00793e2b7d93.png",
             "link": ""
           }
@@ -148,6 +151,7 @@
           "type": "style",
           "settings": {
             "label": "",
+            "label_image": "shopify://shop_images/Gym_51cf6a12-7773-4c8a-916f-1954e2d24afe.png",
             "image": "shopify://shop_images/image_5e97ae8e-e286-48fe-8980-8c86c35c4180.jpg",
             "link": ""
           }

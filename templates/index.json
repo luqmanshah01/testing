@@ -216,6 +216,57 @@
       "settings": {
         "heading": "BROWSE BY DRESS STYLE"
       }
+    },
+    "figma_happy_customers_WPRJjy": {
+      "type": "figma-happy-customers",
+      "blocks": {
+        "review_kgamW7": {
+          "type": "review",
+          "settings": {
+            "name": "Sarah M.",
+            "rating": 5,
+            "verified": true,
+            "review": "\"I'm blown away by the quality and style of the clothes I received. From casual wear to elegant dresses, every piece I've bought has exceeded my expectations.\""
+          }
+        },
+        "review_X3Mywq": {
+          "type": "review",
+          "settings": {
+            "name": "Alex K.",
+            "rating": 5,
+            "verified": true,
+            "review": "\"Finding clothes that align with my personal style used to be a challenge until I discovered Shop.co. The range of options they offer is truly remarkable, catering to a variety of tastes and occasions.\""
+          }
+        },
+        "review_BFtBGb": {
+          "type": "review",
+          "settings": {
+            "name": "James L.",
+            "rating": 5,
+            "verified": true,
+            "review": "\"As someone who's always on the lookout for unique fashion pieces, I'm thrilled to have stumbled upon Shop.co. The selection of clothes is not only diverse but also on-point with the latest trends.\""
+          }
+        },
+        "review_JqVLVr": {
+          "type": "review",
+          "settings": {
+            "name": "Mooa S.",
+            "rating": 5,
+            "verified": true,
+            "review": "\"As someone who's always on the lookout for unique fashion pieces, I'm thrilled to have stumbled upon Shop.co. The selection of clothes is not only diverse but also on-point with the latest trends.\""
+          }
+        }
+      },
+      "block_order": [
+        "review_kgamW7",
+        "review_X3Mywq",
+        "review_BFtBGb",
+        "review_JqVLVr"
+      ],
+      "name": "Happy Customers",
+      "settings": {
+        "heading": "OUR HAPPY CUSTOMERS"
+      }
     }
   },
   "order": [
@@ -224,6 +275,7 @@
     "figma_new_arrivals_yxELFf",
     "figma_top_selling_hJg3BA",
     "figma_happy_customers_main",
-    "figma_dress_style_main"
+    "figma_dress_style_main",
+    "figma_happy_customers_WPRJjy"
   ]
 }

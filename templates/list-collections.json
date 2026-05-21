@@ -176,7 +176,8 @@
         "style_DrJdYM": {
           "type": "style",
           "settings": {
-            "label": "Casual",
+            "label": "",
+            "label_image": "shopify://shop_images/Casual.png",
             "image": "shopify://shop_images/bf5be06b-af14-45e7-a7a7-fa116aa2858d_cc04f24d-a581-46c5-a57e-deb315384726.png",
             "link": ""
           }
@@ -184,7 +185,8 @@
         "style_J9PUUT": {
           "type": "style",
           "settings": {
-            "label": "Formal",
+            "label": "",
+            "label_image": "shopify://shop_images/Formal.png",
             "image": "shopify://shop_images/061cb53b-fcee-49a6-ac0e-70b671556e32_1af8e34e-201c-4759-9abe-e7eccd7d049f.png",
             "link": ""
           }
@@ -193,6 +195,7 @@
           "type": "style",
           "settings": {
             "label": "Party",
+            "label_image": "shopify://shop_images/Party.png",
             "image": "shopify://shop_images/5ae3dad9-f9e2-4073-a061-e671836304ec.png",
             "link": ""
           }
@@ -200,7 +203,8 @@
         "style_VcXzjh": {
           "type": "style",
           "settings": {
-            "label": "Gym",
+            "label": "",
+            "label_image": "shopify://shop_images/Gym.png",
             "image": "shopify://shop_images/image.jpg",
             "link": ""
           }

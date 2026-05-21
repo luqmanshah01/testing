@@ -15,7 +15,13 @@
               class="ds__card {% if forloop.index == 1 %}ds__card--sm{% else %}ds__card--lg{% endif %}"
               {{ block.shopify_attributes }}
             >
-              <span class="ds__label">{{ block.settings.label }}</span>
+              <div class="ds__label-img">
+                {%- if block.settings.label_image != blank -%}
+                  {{ block.settings.label_image | image_url: width: 200 | image_tag: class: 'ds__label-img-tag', loading: 'lazy', alt: block.settings.label }}
+                {%- else -%}
+                  <span class="ds__label-text">{{ block.settings.label }}</span>
+                {%- endif -%}
+              </div>
               <div class="ds__card-img">
                 {%- if block.settings.image != blank -%}
                   {{
@@ -44,7 +50,13 @@
               class="ds__card {% if forloop.index == 1 %}ds__card--lg{% else %}ds__card--sm{% endif %}"
               {{ block.shopify_attributes }}
             >
-              <span class="ds__label">{{ block.settings.label }}</span>
+              <div class="ds__label-img">
+                {%- if block.settings.label_image != blank -%}
+                  {{ block.settings.label_image | image_url: width: 200 | image_tag: class: 'ds__label-img-tag', loading: 'lazy', alt: block.settings.label }}
+                {%- else -%}
+                  <span class="ds__label-text">{{ block.settings.label }}</span>
+                {%- endif -%}
+              </div>
               <div class="ds__card-img">
                 {%- if block.settings.image != blank -%}
                   {{
@@ -154,16 +166,29 @@
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
   }
 
-  /* ─── Label ─── */
-  .ds__label {
+  /* ─── Label image / text ─── */
+  .ds__label-img {
     position: absolute;
     top: 1.25rem;
     left: 1.25rem;
+    z-index: 2;
+    max-width: 40%;
+  }
+
+  .ds__label-img-tag {
+    width: auto !important;
+    height: auto !important;
+    max-width: 100%;
+    max-height: 48px;
+    display: block;
+    object-fit: contain;
+  }
+
+  .ds__label-text {
     font-family: 'Satoshi', sans-serif;
     font-weight: 700;
     font-size: 1rem;
     color: #000000;
-    z-index: 2;
     line-height: 1;
   }
 
@@ -227,13 +252,18 @@
         {
           "type": "text",
           "id": "label",
-          "label": "Label",
+          "label": "Label (fallback text)",
           "default": "Casual"
         },
         {
           "type": "image_picker",
+          "id": "label_image",
+          "label": "Label image (text logo)"
+        },
+        {
+          "type": "image_picker",
           "id": "image",
-          "label": "Image"
+          "label": "Background image"
         },
         {
           "type": "url",

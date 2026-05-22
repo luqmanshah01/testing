@@ -217,6 +217,58 @@
       "settings": {
         "heading": "OUR HAPPY CUSTOMERS"
       }
+    },
+    "figma_footer_3e3knp": {
+      "type": "figma-footer",
+      "blocks": {
+        "menu_column_kxGmEU": {
+          "type": "menu_column",
+          "settings": {
+            "title": "COMPANY",
+            "menu": ""
+          }
+        },
+        "menu_column_MJLKTE": {
+          "type": "menu_column",
+          "settings": {
+            "title": "HELP",
+            "menu": ""
+          }
+        },
+        "menu_column_DJnxdB": {
+          "type": "menu_column",
+          "settings": {
+            "title": "FAQ",
+            "menu": ""
+          }
+        },
+        "menu_column_MTzaHP": {
+          "type": "menu_column",
+          "settings": {
+            "title": "RESOURCES",
+            "menu": ""
+          }
+        }
+      },
+      "block_order": [
+        "menu_column_kxGmEU",
+        "menu_column_MJLKTE",
+        "menu_column_DJnxdB",
+        "menu_column_MTzaHP"
+      ],
+      "name": "Figma Footer",
+      "settings": {
+        "newsletter_heading": "STAY UPTO DATE ABOUT\nOUR LATEST OFFERS",
+        "email_placeholder": "Enter your email address",
+        "button_label": "Subscribe to Newsletter",
+        "logo_text": "SHOP.CO",
+        "store_description": "We have clothes that suits your style and which you're proud to wear. From women to men.",
+        "twitter_url": "",
+        "facebook_url": "",
+        "instagram_url": "",
+        "github_url": "",
+        "copyright": "Shop.co © 2000-2023, All Rights Reserved"
+      }
     }
   },
   "order": [
@@ -225,6 +277,7 @@
     "figma_new_arrivals_yxELFf",
     "figma_top_selling_hJg3BA",
     "figma_dress_style_main",
-    "figma_happy_customers_WPRJjy"
+    "figma_happy_customers_WPRJjy",
+    "figma_footer_3e3knp"
   ]
 }

@@ -1,3 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110 36" fill="none">
-  <text x="0" y="28" font-family="'Times New Roman', Georgia, serif" font-size="28" font-weight="400" letter-spacing="3" fill="white">ZARA</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 44">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400&display=swap');
+    .z-text { font-family: 'Cormorant Garamond', 'Times New Roman', Georgia, serif; font-weight: 400; font-size: 32px; letter-spacing: 6px; fill: white; }
+  </style>
+  <text class="z-text" x="2" y="33">ZARA</text>
 </svg>

@@ -1,3 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 36" fill="none">
-  <text x="0" y="28" font-family="'Times New Roman', Georgia, serif" font-size="26" font-weight="300" letter-spacing="6" fill="white">VERSACE</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 44">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&display=swap');
+    .v-text { font-family: 'Cormorant Garamond', 'Times New Roman', Georgia, serif; font-weight: 300; font-size: 30px; letter-spacing: 8px; fill: white; }
+  </style>
+  <text class="v-text" x="2" y="32">VERSACE</text>
 </svg>

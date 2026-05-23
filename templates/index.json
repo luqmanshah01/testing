@@ -246,7 +246,7 @@
           "type": "menu_column",
           "settings": {
             "title": "RESOURCES",
-            "menu": ""
+            "menu": "resources"
           }
         }
       },

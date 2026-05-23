@@ -225,14 +225,14 @@
           "type": "menu_column",
           "settings": {
             "title": "COMPANY",
-            "menu": "customer-account-main-menu"
+            "menu": "company"
           }
         },
         "menu_column_MJLKTE": {
           "type": "menu_column",
           "settings": {
             "title": "HELP",
-            "menu": "main-menu"
+            "menu": "help"
           }
         },
         "menu_column_DJnxdB": {

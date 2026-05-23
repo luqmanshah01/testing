@@ -10,60 +10,6 @@
 {
   "type": "footer",
   "name": "Footer",
-  "sections": {
-    "figma_footer_main": {
-      "type": "figma-footer",
-      "blocks": {
-        "col_company": {
-          "type": "menu_column",
-          "settings": {
-            "title": "COMPANY",
-            "menu": "company"
-          }
-        },
-        "col_help": {
-          "type": "menu_column",
-          "settings": {
-            "title": "HELP",
-            "menu": "help"
-          }
-        },
-        "col_faq": {
-          "type": "menu_column",
-          "settings": {
-            "title": "FAQ",
-            "menu": "faq"
-          }
-        },
-        "col_resources": {
-          "type": "menu_column",
-          "settings": {
-            "title": "RESOURCES",
-            "menu": "resources"
-          }
-        }
-      },
-      "block_order": [
-        "col_company",
-        "col_help",
-        "col_faq",
-        "col_resources"
-      ],
-      "settings": {
-        "newsletter_heading": "STAY UPTO DATE ABOUT\nOUR LATEST OFFERS",
-        "email_placeholder": "Enter your email address",
-        "button_label": "Subscribe to Newsletter",
-        "logo_text": "SHOP.CO",
-        "store_description": "We have clothes that suits your style and which you're proud to wear. From women to men.",
-        "twitter_url": "https://x.com/",
-        "facebook_url": "https://www.facebook.com/",
-        "instagram_url": "https://www.instagram.com/",
-        "github_url": "https://github.com/",
-        "copyright": "Shop.co © 2000-2023, All Rights Reserved"
-      }
-    }
-  },
-  "order": [
-    "figma_footer_main"
-  ]
+  "sections": {},
+  "order": []
 }

@@ -225,21 +225,21 @@
           "type": "menu_column",
           "settings": {
             "title": "COMPANY",
-            "menu": ""
+            "menu": "customer-account-main-menu"
           }
         },
         "menu_column_MJLKTE": {
           "type": "menu_column",
           "settings": {
             "title": "HELP",
-            "menu": ""
+            "menu": "main-menu"
           }
         },
         "menu_column_DJnxdB": {
           "type": "menu_column",
           "settings": {
             "title": "FAQ",
-            "menu": ""
+            "menu": "faq"
           }
         },
         "menu_column_MTzaHP": {

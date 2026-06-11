@@ -1,0 +1,756 @@
+
+{%- assign review_blocks = section.blocks | where: 'type', 'review' -%}
+{%- assign faq_blocks = section.blocks | where: 'type', 'faq' -%}
+{%- assign total_reviews = review_blocks.size -%}
+{%- assign section_id = 'pr-' | append: section.id -%}
+
+<div class="pr" id="{{ section_id }}">
+  <div class="pr__inner page-width">
+
+    <!-- Tab Navigation -->
+    <div class="pr__tabs" role="tablist" aria-label="Product information tabs">
+      <button
+        class="pr__tab"
+        role="tab"
+        aria-selected="false"
+        data-pr-tab="details"
+        data-pr-target="{{ section_id }}"
+      >{{ section.settings.tab_details_label }}</button>
+
+      <button
+        class="pr__tab pr__tab--active"
+        role="tab"
+        aria-selected="true"
+        data-pr-tab="reviews"
+        data-pr-target="{{ section_id }}"
+      >{{ section.settings.tab_reviews_label }}</button>
+
+      <button
+        class="pr__tab"
+        role="tab"
+        aria-selected="false"
+        data-pr-tab="faqs"
+        data-pr-target="{{ section_id }}"
+      >{{ section.settings.tab_faqs_label }}</button>
+    </div>
+
+    <!-- Product Details Panel -->
+    <div class="pr__panel" data-pr-panel="details" data-pr-target="{{ section_id }}" hidden>
+      <div class="pr__details-content rte">
+        {{ section.settings.product_details_content }}
+      </div>
+    </div>
+
+    <!-- Rating & Reviews Panel -->
+    <div class="pr__panel pr__panel--active" data-pr-panel="reviews" data-pr-target="{{ section_id }}">
+
+      <div class="pr__reviews-header">
+        <h3 class="pr__reviews-title">
+          All Reviews
+          <span class="pr__reviews-count">({{ total_reviews }})</span>
+        </h3>
+        <div class="pr__reviews-actions">
+
+          <button class="pr__icon-btn" aria-label="Filter reviews">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M3 6h18M7 12h10M11 18h2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+            </svg>
+          </button>
+
+          <div class="pr__sort">
+            <select class="pr__sort-select" aria-label="Sort reviews">
+              <option>Latest</option>
+              <option>Oldest</option>
+              <option>Highest rated</option>
+              <option>Lowest rated</option>
+            </select>
+            <svg class="pr__sort-caret" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+
+          <button class="pr__write-btn">Write a Review</button>
+
+        </div>
+      </div>
+
+      <div class="pr__grid" data-pr-grid="{{ section_id }}">
+        {%- for block in review_blocks -%}
+          <article
+            class="pr__card{% if forloop.index > 4 %} pr__card--hidden{% endif %}"
+            data-pr-index="{{ forloop.index }}"
+            {{ block.shopify_attributes }}
+          >
+            <button class="pr__card-menu" aria-label="Review options">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="8" cy="3" r="1.2"/><circle cx="8" cy="8" r="1.2"/><circle cx="8" cy="13" r="1.2"/>
+              </svg>
+            </button>
+
+            <div class="pr__card-stars" aria-label="{{ block.settings.rating }} out of 5 stars">
+              {%- for i in (1..5) -%}
+                <svg class="pr__star{% if i <= block.settings.rating %} pr__star--on{% endif %}" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M10 1l2.39 4.84 5.34.78-3.86 3.76.91 5.32L10 13.27l-4.78 2.51.91-5.32L2.27 6.62l5.34-.78z"/>
+                </svg>
+              {%- endfor -%}
+            </div>
+
+            <div class="pr__card-reviewer">
+              <span class="pr__card-name">{{ block.settings.name }}</span>
+              {%- if block.settings.verified -%}
+                <span class="pr__card-verified" aria-label="Verified buyer">
+                  <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <circle cx="10" cy="10" r="10" fill="#01AB31"/>
+                    <path d="M6 10.5l2.5 2.5 5.5-5.5" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              {%- endif -%}
+            </div>
+
+            <p class="pr__card-text">{{ block.settings.review }}</p>
+
+            {%- if block.settings.date != blank -%}
+              <p class="pr__card-date">Posted on {{ block.settings.date }}</p>
+            {%- endif -%}
+
+          </article>
+        {%- else -%}
+          <p class="pr__empty">No reviews yet.</p>
+        {%- endfor -%}
+      </div>
+
+      {%- if total_reviews > 4 -%}
+        <div class="pr__load-wrap">
+          <button class="pr__load-btn" data-pr-load="{{ section_id }}">Load More Reviews</button>
+        </div>
+      {%- endif -%}
+
+    </div>
+
+    <!-- FAQs Panel -->
+    <div class="pr__panel" data-pr-panel="faqs" data-pr-target="{{ section_id }}" hidden>
+      {%- if faq_blocks.size > 0 -%}
+        <div class="pr__faqs">
+          {%- for block in faq_blocks -%}
+            <details class="pr__faq" {{ block.shopify_attributes }}>
+              <summary class="pr__faq-q">
+                {{ block.settings.question }}
+                <svg class="pr__faq-caret" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </summary>
+              <p class="pr__faq-a">{{ block.settings.answer }}</p>
+            </details>
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <p class="pr__empty">No FAQs added yet.</p>
+      {%- endif -%}
+    </div>
+
+  </div>
+</div>
+
+{% javascript %}
+  (function () {
+    function initReviews(sectionEl) {
+      var id = sectionEl.id;
+
+      // Tab switching
+      sectionEl.querySelectorAll('[data-pr-tab]').forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          var panelName = tab.getAttribute('data-pr-tab');
+
+          sectionEl.querySelectorAll('[data-pr-tab]').forEach(function (t) {
+            t.classList.remove('pr__tab--active');
+            t.setAttribute('aria-selected', 'false');
+          });
+          tab.classList.add('pr__tab--active');
+          tab.setAttribute('aria-selected', 'true');
+
+          sectionEl.querySelectorAll('[data-pr-panel]').forEach(function (p) {
+            if (p.getAttribute('data-pr-panel') === panelName) {
+              p.removeAttribute('hidden');
+              p.classList.add('pr__panel--active');
+            } else {
+              p.setAttribute('hidden', '');
+              p.classList.remove('pr__panel--active');
+            }
+          });
+        });
+      });
+
+      // Load more reviews
+      var loadBtn = sectionEl.querySelector('[data-pr-load]');
+      if (loadBtn) {
+        loadBtn.addEventListener('click', function () {
+          sectionEl.querySelectorAll('.pr__card--hidden').forEach(function (card) {
+            card.classList.remove('pr__card--hidden');
+          });
+          loadBtn.closest('.pr__load-wrap').style.display = 'none';
+        });
+      }
+    }
+
+    function init() {
+      document.querySelectorAll('.pr').forEach(initReviews);
+    }
+
+    document.readyState === 'loading'
+      ? document.addEventListener('DOMContentLoaded', init)
+      : init();
+  })();
+{% endjavascript %}
+
+{% stylesheet %}
+
+  .pr {
+    background-color: #ffffff;
+    padding-block: 3rem 4rem;
+  }
+
+  .pr__inner {
+    padding-inline: 1rem;
+  }
+
+  @media screen and (min-width: 750px) {
+    .pr__inner { padding-inline: 2.5rem; }
+  }
+
+  @media screen and (min-width: 1200px) {
+    .pr__inner { padding-inline: 4rem; }
+  }
+
+  /* ── Tabs ── */
+  .pr__tabs {
+    display: flex;
+    border-bottom: 1.5px solid rgba(0, 0, 0, 0.12);
+    gap: 0;
+    margin-bottom: 2.5rem;
+  }
+
+  .pr__tab {
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    color: #666666;
+    background: none;
+    border: none;
+    border-bottom: 2.5px solid transparent;
+    margin-bottom: -1.5px;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .pr__tab:hover {
+    color: #000000;
+  }
+
+  .pr__tab--active {
+    color: #000000;
+    font-weight: 600;
+    border-bottom-color: #000000;
+  }
+
+  /* ── Panels ── */
+  .pr__panel {
+    display: none;
+  }
+
+  .pr__panel--active {
+    display: block;
+  }
+
+  /* ── Reviews Header ── */
+  .pr__reviews-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+    flex-wrap: wrap;
+  }
+
+  .pr__reviews-title {
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 700;
+    font-size: 1.375rem;
+    color: #000000;
+    margin: 0;
+    line-height: 1;
+  }
+
+  .pr__reviews-count {
+    font-weight: 400;
+    color: #666666;
+  }
+
+  .pr__reviews-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+  }
+
+  /* Filter icon button */
+  .pr__icon-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    border: 1.5px solid rgba(0, 0, 0, 0.15);
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #000000;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+    flex-shrink: 0;
+    padding: 0;
+  }
+
+  .pr__icon-btn:hover {
+    border-color: #000000;
+    background-color: #f5f5f5;
+  }
+
+  /* Sort dropdown */
+  .pr__sort {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .pr__sort-select {
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 400;
+    font-size: 0.9375rem;
+    color: #000000;
+    background: #ffffff;
+    border: 1.5px solid rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    height: 40px;
+    padding: 0 2.25rem 0 0.875rem;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+
+  .pr__sort-select:hover,
+  .pr__sort-select:focus {
+    border-color: #000000;
+  }
+
+  .pr__sort-caret {
+    position: absolute;
+    right: 0.625rem;
+    pointer-events: none;
+    color: #666666;
+    flex-shrink: 0;
+  }
+
+  /* Write a Review button */
+  .pr__write-btn {
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 500;
+    font-size: 0.9375rem;
+    color: #ffffff;
+    background: #000000;
+    border: none;
+    border-radius: 62px;
+    height: 40px;
+    padding: 0 1.25rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .pr__write-btn:hover {
+    background-color: #222222;
+  }
+
+  /* ── Reviews Grid ── */
+  .pr__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  @media screen and (min-width: 750px) {
+    .pr__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+    }
+  }
+
+  /* ── Review Card ── */
+  .pr__card {
+    position: relative;
+    background: #ffffff;
+    border: 1.5px solid rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    padding: 1.5rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    box-sizing: border-box;
+  }
+
+  .pr__card--hidden {
+    display: none;
+  }
+
+  /* Three-dot menu */
+  .pr__card-menu {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    background: none;
+    border: none;
+    padding: 0.25rem;
+    cursor: pointer;
+    color: #999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .pr__card-menu:hover {
+    color: #000000;
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  /* Stars */
+  .pr__card-stars {
+    display: flex;
+    gap: 2px;
+  }
+
+  .pr__star {
+    width: 20px;
+    height: 20px;
+    fill: #E8E8E8;
+    flex-shrink: 0;
+    display: block;
+  }
+
+  .pr__star path {
+    fill: inherit;
+  }
+
+  .pr__star--on {
+    fill: #FFC633;
+  }
+
+  /* Reviewer row */
+  .pr__card-reviewer {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .pr__card-name {
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #000000;
+    line-height: 1;
+  }
+
+  .pr__card-verified {
+    display: flex;
+    align-items: center;
+    line-height: 0;
+    flex-shrink: 0;
+  }
+
+  /* Review text */
+  .pr__card-text {
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 400;
+    font-size: 0.9375rem;
+    color: #333333;
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  /* Date */
+  .pr__card-date {
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 400;
+    font-size: 0.875rem;
+    color: #999999;
+    margin: 0;
+    line-height: 1;
+  }
+
+  /* ── Load More ── */
+  .pr__load-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
+  .pr__load-btn {
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 500;
+    font-size: 0.9375rem;
+    color: #000000;
+    background: #ffffff;
+    border: 1.5px solid rgba(0, 0, 0, 0.2);
+    border-radius: 62px;
+    height: 48px;
+    padding: 0 2rem;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .pr__load-btn:hover {
+    border-color: #000000;
+    background-color: #f5f5f5;
+  }
+
+  /* ── Product Details ── */
+  .pr__details-content {
+    font-family: 'Satoshi', sans-serif;
+    font-size: 0.9375rem;
+    color: #333333;
+    line-height: 1.7;
+    max-width: 720px;
+  }
+
+  /* ── FAQs ── */
+  .pr__faqs {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-top: 1.5px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .pr__faq {
+    border-bottom: 1.5px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .pr__faq-q {
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #000000;
+    padding: 1.25rem 0;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    user-select: none;
+  }
+
+  .pr__faq-q::-webkit-details-marker { display: none; }
+
+  .pr__faq[open] .pr__faq-caret {
+    transform: rotate(180deg);
+  }
+
+  .pr__faq-caret {
+    flex-shrink: 0;
+    color: #666666;
+    transition: transform 0.2s ease;
+  }
+
+  .pr__faq-a {
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 400;
+    font-size: 0.9375rem;
+    color: #666666;
+    line-height: 1.65;
+    margin: 0 0 1.25rem;
+  }
+
+  /* ── Empty state ── */
+  .pr__empty {
+    font-family: 'Satoshi', sans-serif;
+    font-size: 0.9375rem;
+    color: #999999;
+    text-align: center;
+    padding: 3rem 0;
+    margin: 0;
+  }
+
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Product Reviews",
+  "tag": "section",
+  "class": "figma-product-reviews",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Tab labels"
+    },
+    {
+      "type": "text",
+      "id": "tab_details_label",
+      "label": "Tab 1 — Product Details",
+      "default": "Product Details"
+    },
+    {
+      "type": "text",
+      "id": "tab_reviews_label",
+      "label": "Tab 2 — Rating & Reviews",
+      "default": "Rating & Reviews"
+    },
+    {
+      "type": "text",
+      "id": "tab_faqs_label",
+      "label": "Tab 3 — FAQs",
+      "default": "FAQs"
+    },
+    {
+      "type": "header",
+      "content": "Product Details tab content"
+    },
+    {
+      "type": "richtext",
+      "id": "product_details_content",
+      "label": "Product details content",
+      "default": "<p>Add your product details here.</p>"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Reviewer name",
+          "default": "Samantha D."
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Star rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "checkbox",
+          "id": "verified",
+          "label": "Verified buyer",
+          "default": true
+        },
+        {
+          "type": "textarea",
+          "id": "review",
+          "label": "Review text",
+          "default": "I absolutely love this t-shirt! The design is unique and the fabric feels so comfortable."
+        },
+        {
+          "type": "text",
+          "id": "date",
+          "label": "Date posted",
+          "default": "August 14, 2023"
+        }
+      ]
+    },
+    {
+      "type": "faq",
+      "name": "FAQ",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "What is your return policy?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "We accept returns within 30 days of purchase."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Reviews",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "name": "Samantha D.",
+            "rating": 5,
+            "verified": true,
+            "review": "I absolutely love this t-shirt! The design is unique and the fabric feels so comfortable. As a fellow designer, I appreciate the attention to detail. It's become my favorite go-to shirt!",
+            "date": "August 14, 2023"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "name": "Alex M.",
+            "rating": 4,
+            "verified": true,
+            "review": "This t-shirt exceeded my expectations! The colors are vibrant and the print quality is top-notch. Being a UI/UX designer myself, I'm quite picky about aesthetics, and this t-shirt definitely gets a thumbs up from me.",
+            "date": "August 15, 2023"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "name": "Ethan R.",
+            "rating": 4,
+            "verified": true,
+            "review": "This t-shirt is a must-have for anyone who appreciates great design. The minimalistic yet stylish pattern caught my eye, and the fit is perfect. I can see the designer's touch in every aspect of this shirt.",
+            "date": "August 16, 2023"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "name": "Olivia P.",
+            "rating": 5,
+            "verified": true,
+            "review": "As a UI/UX enthusiast, I value simplicity and functionality. This t-shirt not only represents those principles but also feels great to wear. It's evident that the designer poured their creativity into making this t-shirt stand out.",
+            "date": "August 17, 2023"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "name": "Liam K.",
+            "rating": 4,
+            "verified": true,
+            "review": "This t-shirt is a fusion of comfort and creativity. The fabric is soft, and the design speaks volumes about the designer's skills. It's like wearing a piece of art that refreshes my passion for both design and fashion.",
+            "date": "August 18, 2023"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "name": "Ava H.",
+            "rating": 4,
+            "verified": false,
+            "review": "I'm not just wearing a t-shirt; I'm wearing a piece of design philosophy. The intricate details and thoughtful layout of the design make this shirt a conversation starter.",
+            "date": "August 19, 2023"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

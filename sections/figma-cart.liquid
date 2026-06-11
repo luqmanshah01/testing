@@ -1,0 +1,551 @@
+{% comment %}figma-cart.liquid - Custom cart page matching Figma design{% endcomment %}
+
+<div class="fc-page" id="fc-cart-page">
+  <div class="fc-container">
+
+    {% if cart.empty? %}
+      <div class="fc-empty">
+        <h1 class="fc-title">YOUR CART</h1>
+        <p class="fc-empty-text">Your cart is currently empty.</p>
+        <a href="/collections/all" class="fc-checkout-btn" style="display:inline-block;text-align:center;">Continue Shopping</a>
+      </div>
+
+    {% else %}
+      <div class="fc-layout">
+
+        {%- comment -%} ─── LEFT: Cart Items ─── {%- endcomment -%}
+        <div class="fc-left">
+          <h1 class="fc-title">YOUR CART</h1>
+
+          <div class="fc-items" id="fc-items">
+            {% for item in cart.items %}
+              <div class="fc-item" data-key="{{ item.key }}">
+
+                {%- comment -%} Delete icon – top right {%- endcomment -%}
+                <button class="fc-delete" data-key="{{ item.key }}" aria-label="Remove {{ item.title | escape }}">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 6H5H21" stroke="#FF3333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6M19 6L18 20C18 20.5304 17.7893 21.0391 17.4142 21.4142C17.0391 21.7893 16.5304 22 16 22H8C7.46957 22 6.96086 21.7893 6.58579 21.4142C6.21071 21.0391 6 20.5304 6 20L5 6H19Z" stroke="#FF3333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+
+                {%- comment -%} Product image {%- endcomment -%}
+                <div class="fc-item-img">
+                  {%- if item.image -%}
+                    <img
+                      src="{{ item.image | image_url: width: 200 }}"
+                      alt="{{ item.title | escape }}"
+                      width="100"
+                      height="100"
+                      loading="lazy"
+                    >
+                  {%- else -%}
+                    <div class="fc-item-img-ph"></div>
+                  {%- endif -%}
+                </div>
+
+                {%- comment -%} Item details {%- endcomment -%}
+                <div class="fc-item-info">
+                  <h3 class="fc-item-name">{{ item.product.title }}</h3>
+
+                  <div class="fc-item-variants">
+                    {%- for option in item.options_with_values -%}
+                      <p class="fc-item-opt">{{ option.name }}: <span>{{ option.value }}</span></p>
+                    {%- endfor -%}
+                  </div>
+
+                  <div class="fc-item-footer">
+                    <span class="fc-item-price">{{ item.final_price | money }}</span>
+
+                    <div class="fc-qty">
+                      <button
+                        class="fc-qty-btn"
+                        data-action="decrease"
+                        data-key="{{ item.key }}"
+                        data-qty="{{ item.quantity }}"
+                        aria-label="Decrease quantity"
+                      >−</button>
+                      <span class="fc-qty-num" data-key="{{ item.key }}">{{ item.quantity }}</span>
+                      <button
+                        class="fc-qty-btn"
+                        data-action="increase"
+                        data-key="{{ item.key }}"
+                        data-qty="{{ item.quantity }}"
+                        aria-label="Increase quantity"
+                      >+</button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              {%- unless forloop.last -%}
+                <div class="fc-item-sep"></div>
+              {%- endunless -%}
+            {%- endfor -%}
+          </div>
+        </div>
+
+        {%- comment -%} ─── RIGHT: Order Summary ─── {%- endcomment -%}
+        <div class="fc-right">
+          <div class="fc-summary">
+            <h2 class="fc-summary-title">Order Summary</h2>
+
+            <div class="fc-summary-rows">
+              <div class="fc-summary-row">
+                <span>Subtotal</span>
+                <span>{{ cart.items_subtotal_price | money }}</span>
+              </div>
+
+              {%- for discount in cart.cart_level_discount_applications -%}
+                <div class="fc-summary-row fc-summary-row--discount">
+                  <span>Discount ({{ discount.title }})</span>
+                  <span>-{{ discount.total_allocated_amount | money }}</span>
+                </div>
+              {%- endfor -%}
+
+              <div class="fc-summary-row">
+                <span>Delivery Fee</span>
+                <span>{{ section.settings.delivery_fee }}</span>
+              </div>
+
+              <div class="fc-summary-sep"></div>
+
+              <div class="fc-summary-row fc-summary-row--total">
+                <span>Total</span>
+                <span>{{ cart.total_price | money }}</span>
+              </div>
+            </div>
+
+            {%- comment -%} Promo code {%- endcomment -%}
+            <div class="fc-promo">
+              <input
+                type="text"
+                id="fc-promo-input"
+                class="fc-promo-input"
+                placeholder="Add promo code"
+              >
+              <button type="button" class="fc-promo-btn" id="fc-promo-apply">Apply</button>
+            </div>
+
+            {%- comment -%} Checkout {%- endcomment -%}
+            <form action="/checkout" method="post">
+              {{ cart | payment_terms }}
+              <button type="submit" class="fc-checkout-btn">Go to Checkout →</button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+
+{% stylesheet %}
+  .fc-page {
+    font-family: 'Satoshi', sans-serif;
+    background: #fff;
+    padding: 40px 0 80px;
+  }
+
+  .fc-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ── Empty cart ── */
+  .fc-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 40px 0;
+  }
+
+  .fc-empty-text {
+    color: #666;
+    font-size: 16px;
+  }
+
+  /* ── Two-column layout ── */
+  .fc-layout {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 32px;
+    align-items: start;
+  }
+
+  /* ── Page title ── */
+  .fc-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #000;
+    letter-spacing: 0.03em;
+    margin: 0 0 24px;
+  }
+
+  /* ── Cart items ── */
+  .fc-items {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .fc-item {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    grid-template-rows: auto;
+    gap: 0 20px;
+    position: relative;
+    padding: 24px 0;
+  }
+
+  .fc-item-sep {
+    height: 1px;
+    background: #e8e8e8;
+  }
+
+  /* Delete button – top right of item */
+  .fc-delete {
+    position: absolute;
+    top: 24px;
+    right: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background 0.15s;
+  }
+
+  .fc-delete:hover {
+    background: #fff0f0;
+  }
+
+  /* Product image */
+  .fc-item-img {
+    width: 110px;
+    height: 110px;
+    background: #f0eeee;
+    border-radius: 12px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .fc-item-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .fc-item-img-ph {
+    width: 100%;
+    height: 100%;
+    background: #e8e6e6;
+  }
+
+  /* Item info */
+  .fc-item-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 110px;
+    padding-right: 36px;
+  }
+
+  .fc-item-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: #000;
+    margin: 0 0 6px;
+    line-height: 1.3;
+  }
+
+  .fc-item-variants {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .fc-item-opt {
+    font-size: 13px;
+    color: #666;
+    margin: 0;
+  }
+
+  .fc-item-opt span {
+    color: #000;
+    font-weight: 500;
+  }
+
+  .fc-item-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+
+  .fc-item-price {
+    font-size: 18px;
+    font-weight: 700;
+    color: #000;
+  }
+
+  /* Quantity selector */
+  .fc-qty {
+    display: flex;
+    align-items: center;
+    background: #f0f0f0;
+    border-radius: 100px;
+    padding: 6px 12px;
+    gap: 14px;
+  }
+
+  .fc-qty-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 500;
+    color: #000;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    transition: opacity 0.15s;
+  }
+
+  .fc-qty-btn:hover {
+    opacity: 0.6;
+  }
+
+  .fc-qty-num {
+    font-size: 15px;
+    font-weight: 600;
+    color: #000;
+    min-width: 18px;
+    text-align: center;
+  }
+
+  /* ── Order Summary ── */
+  .fc-summary {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 20px;
+    padding: 28px 24px 28px;
+  }
+
+  .fc-summary-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #000;
+    margin: 0 0 24px;
+  }
+
+  .fc-summary-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .fc-summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 15px;
+    color: #555;
+  }
+
+  .fc-summary-row--discount {
+    color: #e01e1e;
+  }
+
+  .fc-summary-sep {
+    height: 1px;
+    background: #e8e8e8;
+    margin: 4px 0;
+  }
+
+  .fc-summary-row--total {
+    font-size: 18px;
+    font-weight: 700;
+    color: #000;
+  }
+
+  .fc-summary-row--total span:last-child {
+    font-size: 20px;
+  }
+
+  /* Promo code */
+  .fc-promo {
+    display: flex;
+    align-items: center;
+    background: #f0f0f0;
+    border-radius: 100px;
+    padding: 6px 6px 6px 18px;
+    margin-top: 24px;
+    gap: 8px;
+  }
+
+  .fc-promo-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    color: #000;
+    outline: none;
+    font-family: inherit;
+  }
+
+  .fc-promo-input::placeholder {
+    color: #999;
+  }
+
+  .fc-promo-btn {
+    background: #000;
+    color: #fff;
+    border: none;
+    border-radius: 100px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s;
+  }
+
+  .fc-promo-btn:hover {
+    background: #222;
+  }
+
+  /* Checkout button */
+  .fc-checkout-btn {
+    display: block;
+    width: 100%;
+    background: #000;
+    color: #fff;
+    border: none;
+    border-radius: 100px;
+    padding: 16px;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 20px;
+    transition: background 0.15s;
+    text-decoration: none;
+    box-sizing: border-box;
+  }
+
+  .fc-checkout-btn:hover {
+    background: #222;
+    color: #fff;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    .fc-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .fc-right {
+      order: -1;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .fc-title {
+      font-size: 24px;
+    }
+
+    .fc-item {
+      grid-template-columns: 90px 1fr;
+    }
+
+    .fc-item-img {
+      width: 90px;
+      height: 90px;
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  (function () {
+    var cartPage = document.getElementById('fc-cart-page');
+    if (!cartPage) return;
+
+    /* ── Quantity buttons ── */
+    cartPage.addEventListener('click', function (e) {
+      var btn = e.target.closest('.fc-qty-btn');
+      if (!btn) return;
+
+      var key = btn.dataset.key;
+      var action = btn.dataset.action;
+      var numEl = cartPage.querySelector('.fc-qty-num[data-key="' + key + '"]');
+      var current = parseInt(numEl ? numEl.textContent : 1, 10);
+      var newQty = action === 'increase' ? current + 1 : Math.max(0, current - 1);
+
+      updateItem(key, newQty);
+    });
+
+    /* ── Delete buttons ── */
+    cartPage.addEventListener('click', function (e) {
+      var btn = e.target.closest('.fc-delete');
+      if (!btn) return;
+      updateItem(btn.dataset.key, 0);
+    });
+
+    /* ── Promo code ── */
+    var promoApply = document.getElementById('fc-promo-apply');
+    if (promoApply) {
+      promoApply.addEventListener('click', function () {
+        var code = document.getElementById('fc-promo-input').value.trim();
+        if (code) {
+          window.location.href = '/discount/' + encodeURIComponent(code) + '?return_to=/cart';
+        }
+      });
+    }
+
+    function updateItem(key, qty) {
+      fetch('/cart/change.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ id: key, quantity: qty })
+      })
+      .then(function (r) { return r.json(); })
+      .then(function () { window.location.reload(); })
+      .catch(function (err) { console.error('Cart update failed', err); });
+    }
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Cart",
+  "tag": "section",
+  "class": "figma-cart-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "delivery_fee",
+      "label": "Delivery Fee Display",
+      "default": "$15",
+      "info": "Text shown for delivery fee in the order summary (e.g. $15 or Free)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Figma Cart"
+    }
+  ]
+}
+{% endschema %}
